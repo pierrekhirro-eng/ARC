@@ -1,27 +1,29 @@
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { Intro } from "./components/Intro";
-import { Services } from "./components/Services";
+import { Statement } from "./components/Statement";
+import { Expertise } from "./components/Expertise";
 import { Process } from "./components/Process";
-import { SelectedWork } from "./components/SelectedWork";
-import { Manifesto } from "./components/Manifesto";
+import { Work } from "./components/Work";
+import { About } from "./components/About";
 import { CTA } from "./components/CTA";
 import { Footer } from "./components/Footer";
 
 export default function App() {
   return (
-    <>
+    <div className="site-shell">
       <Navbar />
+
       <main>
         <Hero />
-        <Intro />
-        <Services />
+        <Statement />
+        <Expertise />
         <Process />
-        <SelectedWork />
-        <Manifesto />
+        <Work />
+        <About />
         <CTA />
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 }
