@@ -1,25 +1,23 @@
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { Statement } from "./components/Statement";
-import { Expertise } from "./components/Expertise";
-import { Process } from "./components/Process";
-import { Work } from "./components/Work";
-import { About } from "./components/About";
+import { ServiceGrid } from "./components/ServiceGrid";
+import { HowItWorks } from "./components/HowItWorks";
+import { ProjectBuilderPreview } from "./components/ProjectBuilderPreview";
+import { SelectedProjects } from "./components/SelectedProjects";
 import { CTA } from "./components/CTA";
 import { Footer } from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="site-shell">
+    <div className="app">
       <Navbar />
 
       <main>
         <Hero />
-        <Statement />
-        <Expertise />
-        <Process />
-        <Work />
-        <About />
+        <ServiceGrid />
+        <HowItWorks />
+        <ProjectBuilderPreview />
+        <SelectedProjects />
         <CTA />
       </main>
 

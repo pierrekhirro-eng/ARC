@@ -1,20 +1,32 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
-const links = [
-  { label: "Expertise", href: "#expertise" },
-  { label: "Process", href: "#process" },
-  { label: "Selected work", href: "#work" },
-  { label: "About", href: "#about" },
+const navigation = [
+  {
+    label: "Serviços",
+    href: "#services",
+  },
+  {
+    label: "Como funciona",
+    href: "#process",
+  },
+  {
+    label: "Projetos",
+    href: "#projects",
+  },
+  {
+    label: "Sobre",
+    href: "#about",
+  },
 ];
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 24);
     };
 
     handleScroll();
@@ -28,62 +40,84 @@ export function Navbar() {
     };
   }, []);
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <header
-      className={`navbar ${
-        scrolled ? "navbar-scrolled" : ""
-      } ${open ? "navbar-open" : ""}`}
+      className={[
+        "navbar",
+        scrolled ? "navbar-scrolled" : "",
+        menuOpen ? "navbar-open" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
-      <a href="#top" className="logo" aria-label="ARC home">
-        <span className="logo-box">A</span>
-        <span className="logo-word">ARC</span>
+      <a href="#top" className="navbar-logo" onClick={closeMenu}>
+        <span className="navbar-logo-mark">A</span>
+        <span className="navbar-logo-text">ARC</span>
       </a>
 
-      <nav className="desktop-nav" aria-label="Navegação principal">
-        {links.map((link) => (
-          <a key={link.href} href={link.href}>
-            {link.label}
+      <nav className="navbar-links" aria-label="Navegação principal">
+        {navigation.map((item) => (
+          <a key={item.href} href={item.href}>
+            {item.label}
           </a>
         ))}
       </nav>
 
-      <a href="#contact" className="nav-project">
-        Start a project
-        <ArrowUpRight size={15} />
-      </a>
+      <div className="navbar-actions">
+        <a href="#login" className="navbar-login">
+          Entrar
+        </a>
+
+        <a href="#project" className="navbar-cta">
+          Enviar projeto
+          <ArrowUpRight size={16} strokeWidth={1.8} />
+        </a>
+      </div>
 
       <button
-        className="menu-toggle"
+        className="navbar-menu"
         type="button"
-        aria-label={open ? "Fechar menu" : "Abrir menu"}
-        aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
+        aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((value) => !value)}
       >
-        {open ? <X size={21} /> : <Menu size={21} />}
+        {menuOpen ? (
+          <X size={22} strokeWidth={1.7} />
+        ) : (
+          <Menu size={22} strokeWidth={1.7} />
+        )}
       </button>
 
-      {open && (
-        <div className="mobile-nav">
-          {links.map((link, index) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="mobile-nav-link"
-              onClick={() => setOpen(false)}
-            >
-              <span>0{index + 1}</span>
-              {link.label}
-            </a>
-          ))}
+      {menuOpen && (
+        <div className="mobile-menu">
+          <div className="mobile-menu-links">
+            {navigation.map((item, index) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="mobile-menu-link"
+                onClick={closeMenu}
+              >
+                <span>0{index + 1}</span>
+                {item.label}
+              </a>
+            ))}
+          </div>
 
-          <a
-            href="#contact"
-            className="mobile-nav-cta"
-            onClick={() => setOpen(false)}
-          >
-            Start a project
-            <ArrowUpRight size={16} />
-          </a>
+          <div className="mobile-menu-footer">
+            <a href="#login" onClick={closeMenu}>
+              Entrar
+            </a>
+
+            <a href="#project" onClick={closeMenu}>
+              Enviar projeto
+              <ArrowUpRight size={17} />
+            </a>
+          </div>
         </div>
       )}
     </header>
