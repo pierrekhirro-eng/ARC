@@ -1,0 +1,2160 @@
+.selected-projects {
+  position: relative;
+
+  width: 100%;
+
+  padding: 92px 0 100px;
+
+  overflow: hidden;
+
+  background: var(--bg);
+
+  border-top:
+    1px solid
+    var(--line);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.selected-projects .sp-section-header {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(280px, 350px);
+
+  align-items: end;
+
+  gap: 70px;
+
+  margin-bottom: 40px;
+}
+
+.selected-projects .sp-section-label {
+  display: block;
+
+  margin-bottom: 16px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+  font-weight: 600;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.selected-projects .sp-section-header h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-family: var(--font-display);
+
+  font-size:
+    clamp(
+      2.9rem,
+      4.7vw,
+      5.3rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.075em;
+}
+
+.selected-projects .sp-section-header h2 em {
+  color: #aeb5bd;
+
+  font-family: var(--font-editorial);
+
+  font-style: italic;
+
+  font-weight: 400;
+}
+
+.selected-projects .sp-header-right {
+  padding-bottom: 2px;
+}
+
+.selected-projects .sp-header-right p {
+  max-width: 350px;
+
+  margin: 0 0 15px;
+
+  color: var(--text-soft);
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+.selected-projects .sp-explore {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: var(--green);
+
+  font-size: 7px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.13em;
+}
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.selected-projects .sp-projects-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.selected-projects .sp-project {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+
+  background:
+    #090d10;
+
+  transition:
+    border-color 220ms ease,
+    transform 220ms ease;
+}
+
+.selected-projects .sp-project:hover {
+  border-color:
+    rgba(200, 255, 56, 0.22);
+
+  transform:
+    translateY(-2px);
+}
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.selected-projects .sp-project-top {
+  position: relative;
+
+  z-index: 20;
+
+  height: 45px;
+
+  padding: 0 15px;
+
+  display: grid;
+
+  grid-template-columns:
+    42px
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 12px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  background:
+    rgba(9, 13, 16, 0.9);
+}
+
+.selected-projects .sp-project-number {
+  color: #596168;
+
+  font-family: var(--font-display);
+
+  font-size: 8px;
+}
+
+.selected-projects .sp-project-category {
+  overflow: hidden;
+
+  color: #919aa1;
+
+  font-size: 8px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.11em;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected-projects .sp-project-system {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #555e65;
+
+  font-size: 7px;
+
+  letter-spacing: 0.11em;
+}
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.selected-projects .sp-project-body {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.03fr)
+    minmax(420px, 0.97fr);
+
+  min-height: 410px;
+}
+
+/* =========================================================
+   VISUAL BASE
+========================================================= */
+
+.selected-projects .sp-visual {
+  position: relative;
+
+  min-width: 0;
+  min-height: 410px;
+
+  overflow: hidden;
+
+  border-right:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  background:
+    #090d10;
+}
+
+.selected-projects .sp-visual::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 15;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 9, 11, 0.18),
+      transparent 20%,
+      transparent 80%,
+      rgba(7, 9, 11, 0.14)
+    );
+}
+
+.selected-projects .sp-visual-index {
+  position: absolute;
+
+  left: 14px;
+  bottom: 12px;
+
+  z-index: 30;
+
+  color:
+    rgba(255, 255, 255, 0.2);
+
+  font-family: var(--font-display);
+
+  font-size: 7px;
+
+  letter-spacing: 0.14em;
+}
+
+.selected-projects .sp-visual-grid {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.33;
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    );
+
+  background-size: 42px 42px;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.selected-projects .sp-dashboard-window {
+  position: absolute;
+
+  top: 9%;
+  right: 8%;
+  bottom: 10%;
+  left: 8%;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.15);
+
+  background:
+    linear-gradient(
+      145deg,
+      #13191d,
+      #090d10
+    );
+
+  box-shadow:
+    0 28px 70px
+    rgba(0, 0, 0, 0.32);
+
+  transform:
+    perspective(1300px)
+    rotateX(3deg)
+    rotateY(-3deg);
+
+  transition:
+    transform 500ms
+    cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.selected-projects .sp-project:hover
+  .sp-dashboard-window {
+  transform:
+    perspective(1300px)
+    rotateX(1deg)
+    rotateY(-1deg)
+    translateY(-3px);
+}
+
+.selected-projects .sp-window-top {
+  height: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 9px;
+
+  gap: 10px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.045);
+}
+
+.selected-projects .sp-browser-dots {
+  display: flex;
+
+  gap: 4px;
+}
+
+.selected-projects .sp-browser-dots span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.16);
+}
+
+.selected-projects .sp-window-url {
+  color:
+    rgba(255, 255, 255, 0.15);
+
+  font-size: 5px;
+
+  letter-spacing: 0.08em;
+}
+
+.selected-projects .sp-window-live {
+  margin-left: auto;
+
+  color:
+    rgba(200, 255, 56, 0.62);
+
+  font-size: 5px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-dashboard-layout {
+  height: calc(100% - 25px);
+
+  display: grid;
+
+  grid-template-columns:
+    14%
+    86%;
+}
+
+.selected-projects .sp-dashboard-sidebar {
+  position: relative;
+
+  padding: 13px 8px;
+
+  border-right:
+    1px solid
+    rgba(255, 255, 255, 0.04);
+}
+
+.selected-projects .sp-dashboard-logo {
+  width: 20px;
+  height: 20px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 17px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.25);
+
+  color: var(--green);
+
+  font-family: var(--font-display);
+
+  font-size: 8px;
+}
+
+.selected-projects .sp-side-item {
+  width: 68%;
+  height: 4px;
+
+  margin-bottom: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.055);
+}
+
+.selected-projects .sp-side-item.active {
+  width: 80%;
+
+  background:
+    rgba(200, 255, 56, 0.15);
+}
+
+.selected-projects .sp-side-bottom {
+  position: absolute;
+
+  left: 8px;
+  right: 8px;
+  bottom: 11px;
+
+  height: 1px;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+}
+
+.selected-projects .sp-dashboard-content {
+  min-width: 0;
+
+  padding: 13px;
+}
+
+.selected-projects .sp-dashboard-toolbar {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.selected-projects .sp-dashboard-kicker {
+  margin-bottom: 5px;
+
+  color:
+    rgba(255, 255, 255, 0.22);
+
+  font-size: 5px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-dashboard-heading {
+  width: 130px;
+  height: 5px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+}
+
+.selected-projects .sp-toolbar-pill {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  align-self: flex-start;
+
+  padding: 4px 6px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.12);
+
+  color:
+    rgba(200, 255, 56, 0.55);
+
+  font-size: 5px;
+}
+
+.selected-projects .sp-toolbar-pill span {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--green);
+}
+
+.selected-projects .sp-dashboard-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 6px;
+
+  margin-top: 12px;
+}
+
+.selected-projects .sp-stat {
+  padding: 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.045);
+
+  background:
+    rgba(255, 255, 255, 0.012);
+}
+
+.selected-projects .sp-stat small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.24);
+
+  font-size: 5px;
+
+  text-transform: uppercase;
+}
+
+.selected-projects .sp-stat strong {
+  display: block;
+
+  color:
+    rgba(255, 255, 255, 0.78);
+
+  font-family: var(--font-display);
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+.selected-projects .sp-stat span {
+  display: block;
+
+  margin-top: 2px;
+
+  color:
+    rgba(200, 255, 56, 0.38);
+
+  font-size: 4px;
+}
+
+.selected-projects .sp-chart-card {
+  margin-top: 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.045);
+}
+
+.selected-projects .sp-chart-header {
+  height: 23px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 8px;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.04);
+}
+
+.selected-projects .sp-chart-header span {
+  color:
+    rgba(255, 255, 255, 0.3);
+
+  font-size: 5px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-chart-header small {
+  color:
+    rgba(255, 255, 255, 0.18);
+
+  font-size: 4px;
+}
+
+.selected-projects .sp-chart {
+  position: relative;
+
+  height: 108px;
+
+  overflow: hidden;
+}
+
+.selected-projects .sp-chart-grid {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 24%,
+      rgba(255, 255, 255, 0.035) 25%,
+      transparent 26%,
+      transparent 49%,
+      rgba(255, 255, 255, 0.035) 50%,
+      transparent 51%,
+      transparent 74%,
+      rgba(255, 255, 255, 0.035) 75%,
+      transparent 76%
+    ),
+    linear-gradient(
+      to right,
+      transparent 12%,
+      rgba(200, 255, 56, 0.045) 12.5%,
+      transparent 13%,
+      transparent 24%,
+      rgba(200, 255, 56, 0.045) 24.5%,
+      transparent 25%,
+      transparent 37%,
+      rgba(200, 255, 56, 0.045) 37.5%,
+      transparent 38%,
+      transparent 49%,
+      rgba(200, 255, 56, 0.045) 49.5%,
+      transparent 50%,
+      transparent 62%,
+      rgba(200, 255, 56, 0.045) 62.5%,
+      transparent 63%,
+      transparent 74%,
+      rgba(200, 255, 56, 0.045) 74.5%,
+      transparent 75%,
+      transparent 87%,
+      rgba(200, 255, 56, 0.045) 87.5%,
+      transparent 88%
+    );
+}
+
+.selected-projects .sp-chart-line-main {
+  position: absolute;
+
+  left: 7%;
+  right: 7%;
+  top: 61%;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(200, 255, 56, 0.08),
+      rgba(200, 255, 56, 0.82),
+      rgba(200, 255, 56, 0.12)
+    );
+
+  transform:
+    rotate(-9deg)
+    skewX(-13deg);
+}
+
+.selected-projects .sp-chart-point {
+  position: absolute;
+
+  width: 5px;
+  height: 5px;
+
+  z-index: 3;
+
+  border:
+    1px solid
+    var(--green);
+
+  border-radius: 50%;
+
+  background: #090d10;
+}
+
+.selected-projects .point-1 {
+  left: 29%;
+  top: 62%;
+}
+
+.selected-projects .point-2 {
+  left: 51%;
+  top: 51%;
+}
+
+.selected-projects .point-3 {
+  left: 72%;
+  top: 39%;
+}
+
+.selected-projects .point-4 {
+  right: 11%;
+  top: 26%;
+}
+
+.selected-projects .sp-dashboard-footer {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 6px;
+
+  margin-top: 7px;
+}
+
+.selected-projects .sp-mini-card {
+  padding: 6px 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.04);
+}
+
+.selected-projects .sp-mini-card span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.2);
+
+  font-size: 4px;
+}
+
+.selected-projects .sp-mini-card strong {
+  color:
+    rgba(255, 255, 255, 0.6);
+
+  font-family: var(--font-display);
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   COMMERCE
+========================================================= */
+
+.selected-projects .sp-commerce {
+  display: grid;
+
+  place-items: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(200, 255, 56, 0.045),
+      transparent 44%
+    ),
+    #090d10;
+}
+
+.selected-projects .sp-commerce-grid {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.26;
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.017) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.017) 1px,
+      transparent 1px
+    );
+
+  background-size: 44px 44px;
+}
+
+.selected-projects .sp-commerce-glow {
+  position: absolute;
+
+  width: 240px;
+  height: 240px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(200, 255, 56, 0.075),
+      transparent 70%
+    );
+
+  filter: blur(18px);
+}
+
+.selected-projects .sp-commerce-orbit {
+  position: absolute;
+
+  width: 290px;
+  height: 110px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.13);
+
+  border-radius: 50%;
+
+  transform:
+    rotateX(70deg)
+    rotateZ(-9deg);
+}
+
+.selected-projects .orbit-two {
+  width: 210px;
+  height: 80px;
+
+  border-style: dashed;
+
+  opacity: 0.52;
+}
+
+.selected-projects .sp-commerce-product {
+  position: relative;
+
+  z-index: 5;
+
+  width: min(365px, 72%);
+
+  padding: 14px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.16);
+
+  background:
+    linear-gradient(
+      145deg,
+      #131b1e,
+      #090d10
+    );
+
+  box-shadow:
+    0 25px 60px
+    rgba(0, 0, 0, 0.36);
+
+  transform:
+    perspective(1200px)
+    rotateX(4deg)
+    rotateY(-5deg);
+
+  transition:
+    transform 480ms
+    cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.selected-projects .sp-project:hover
+  .sp-commerce-product {
+  transform:
+    perspective(1200px)
+    rotateX(1deg)
+    rotateY(-2deg)
+    translateY(-4px);
+}
+
+.selected-projects .sp-product-top {
+  height: 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.05);
+}
+
+.selected-projects .sp-product-dots {
+  display: flex;
+
+  gap: 4px;
+}
+
+.selected-projects .sp-product-dots span {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.15);
+}
+
+.selected-projects .sp-product-top > span {
+  color:
+    rgba(255, 255, 255, 0.15);
+
+  font-size: 4px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-product-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.95fr)
+    minmax(0, 1.05fr);
+
+  gap: 13px;
+
+  margin-top: 13px;
+
+  align-items: center;
+}
+
+.selected-projects .sp-product-image {
+  position: relative;
+
+  aspect-ratio: 1 / 1.08;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.11);
+
+  background:
+    linear-gradient(
+      145deg,
+      #1a2427,
+      #0b1013
+    );
+}
+
+.selected-projects .sp-product-image-glow {
+  position: absolute;
+
+  inset: 15%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(200, 255, 56, 0.16),
+      transparent 70%
+    );
+
+  filter: blur(10px);
+}
+
+.selected-projects .sp-product-object {
+  position: absolute;
+
+  width: 42%;
+  aspect-ratio: 1;
+
+  left: 50%;
+  top: 46%;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.42);
+
+  background:
+    linear-gradient(
+      145deg,
+      #1c2928,
+      #0c1114
+    );
+
+  box-shadow:
+    0 12px 28px
+    rgba(0, 0, 0, 0.3);
+
+  transform:
+    translate(-50%, -50%)
+    rotate(8deg);
+}
+
+.selected-projects .sp-product-object-shadow {
+  position: absolute;
+
+  width: 46%;
+  height: 10%;
+
+  left: 50%;
+  bottom: 17%;
+
+  border-radius: 50%;
+
+  background:
+    rgba(0, 0, 0, 0.55);
+
+  filter: blur(7px);
+
+  transform:
+    translateX(-50%);
+}
+
+.selected-projects .sp-product-info {
+  min-width: 0;
+}
+
+.selected-projects .sp-product-label {
+  color:
+    rgba(200, 255, 56, 0.52);
+
+  font-size: 5px;
+
+  letter-spacing: 0.11em;
+}
+
+.selected-projects .sp-product-title-line {
+  width: 77%;
+  height: 5px;
+
+  margin-top: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+}
+
+.selected-projects .sp-product-subtitle-line {
+  width: 49%;
+  height: 4px;
+
+  margin-top: 7px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+}
+
+.selected-projects .sp-product-price {
+  margin-top: 14px;
+
+  color: var(--green);
+
+  font-family: var(--font-display);
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  letter-spacing: -0.04em;
+}
+
+.selected-projects .sp-product-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 8px;
+}
+
+.selected-projects .sp-product-actions button {
+  min-height: 28px;
+
+  padding: 0 9px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.22);
+
+  background:
+    rgba(200, 255, 56, 0.025);
+
+  color: var(--green);
+
+  font-size: 5px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-product-actions > span {
+  width: 28px;
+  height: 28px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  color:
+    rgba(255, 255, 255, 0.35);
+
+  font-size: 10px;
+}
+
+.selected-projects .sp-product-bottom {
+  display: flex;
+
+  gap: 9px;
+
+  margin-top: 12px;
+  padding-top: 9px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.045);
+
+  color:
+    rgba(255, 255, 255, 0.18);
+
+  font-size: 4px;
+
+  letter-spacing: 0.09em;
+}
+
+.selected-projects .sp-commerce-floating {
+  position: absolute;
+
+  right: 7%;
+  bottom: 10%;
+
+  z-index: 10;
+
+  min-width: 92px;
+
+  padding: 9px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+
+  background:
+    rgba(8, 12, 15, 0.88);
+
+  backdrop-filter: blur(10px);
+}
+
+.selected-projects .sp-commerce-floating span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.24);
+
+  font-size: 4px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-commerce-floating strong {
+  display: block;
+
+  color: var(--green);
+
+  font-family: var(--font-display);
+
+  font-size: 16px;
+
+  font-weight: 500;
+}
+
+.selected-projects .sp-commerce-floating small {
+  color:
+    rgba(255, 255, 255, 0.18);
+
+  font-size: 4px;
+}
+
+.selected-projects .sp-commerce-cart {
+  position: absolute;
+
+  top: 11%;
+  left: 6%;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 8px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.11);
+
+  background:
+    rgba(9, 13, 16, 0.72);
+
+  color:
+    rgba(255, 255, 255, 0.25);
+
+  font-size: 5px;
+}
+
+.selected-projects .sp-commerce-cart > div {
+  display: grid;
+  place-items: center;
+
+  color: var(--green);
+}
+
+.selected-projects .sp-commerce-cart strong {
+  color:
+    rgba(255, 255, 255, 0.62);
+
+  font-family: var(--font-display);
+}
+
+/* =========================================================
+   AUTOMATION
+========================================================= */
+
+.selected-projects .sp-automation {
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(200, 255, 56, 0.035),
+      transparent 42%
+    ),
+    #090d10;
+}
+
+.selected-projects .sp-automation-grid {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    );
+
+  background-size: 40px 40px;
+}
+
+.selected-projects .sp-flow-header {
+  position: absolute;
+
+  top: 10%;
+  right: 5%;
+  left: 4%;
+
+  z-index: 8;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color:
+    rgba(255, 255, 255, 0.2);
+
+  font-size: 5px;
+
+  letter-spacing: 0.11em;
+}
+
+.selected-projects .sp-flow-header span {
+  color:
+    rgba(255, 255, 255, 0.12);
+}
+
+.selected-projects .sp-flow-badge {
+  position: absolute;
+
+  top: 17%;
+  left: 4%;
+
+  z-index: 10;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 6px 8px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.13);
+
+  background:
+    rgba(9, 13, 16, 0.78);
+
+  color:
+    rgba(255, 255, 255, 0.45);
+
+  font-size: 5px;
+}
+
+.selected-projects .sp-flow-badge svg {
+  color: var(--green);
+}
+
+.selected-projects .sp-flow-node,
+.selected-projects .sp-flow-center {
+  position: absolute;
+
+  z-index: 8;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+
+  background:
+    #101518;
+
+  box-shadow:
+    0 14px 32px
+    rgba(0, 0, 0, 0.25);
+}
+
+.selected-projects .sp-flow-node {
+  width: 34px;
+  height: 34px;
+}
+
+.selected-projects .sp-flow-node div {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--green);
+
+  box-shadow:
+    0 0 12px
+    rgba(200, 255, 56, 0.55);
+}
+
+.selected-projects .sp-flow-node small {
+  position: absolute;
+
+  top: calc(100% + 7px);
+
+  color:
+    rgba(255, 255, 255, 0.18);
+
+  font-size: 4px;
+
+  white-space: nowrap;
+
+  letter-spacing: 0.09em;
+}
+
+.selected-projects .sp-flow-center {
+  left: 50%;
+  top: 51%;
+
+  width: 56px;
+  height: 56px;
+
+  color: var(--green);
+
+  border-color:
+    rgba(200, 255, 56, 0.27);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(200, 255, 56, 0.1),
+      #101518
+    );
+
+  transform:
+    translate(-50%, -50%);
+}
+
+.selected-projects .sp-flow-center span {
+  position: absolute;
+
+  top: calc(100% + 8px);
+
+  color:
+    rgba(200, 255, 56, 0.38);
+
+  font-size: 4px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .node-a {
+  left: 20%;
+  top: 31%;
+}
+
+.selected-projects .node-b {
+  right: 20%;
+  top: 31%;
+}
+
+.selected-projects .node-c {
+  left: 26%;
+  bottom: 23%;
+}
+
+.selected-projects .node-d {
+  right: 26%;
+  bottom: 23%;
+}
+
+.selected-projects .node-e {
+  left: 50%;
+  bottom: 11%;
+
+  transform:
+    translateX(-50%);
+}
+
+.selected-projects .sp-flow-line {
+  position: absolute;
+
+  z-index: 4;
+
+  height: 1px;
+
+  transform-origin: left center;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(200, 255, 56, 0.035),
+      rgba(200, 255, 56, 0.42),
+      rgba(200, 255, 56, 0.035)
+    );
+}
+
+.selected-projects .line-a {
+  width: 29%;
+
+  left: 22%;
+  top: 37%;
+
+  transform: rotate(14deg);
+}
+
+.selected-projects .line-b {
+  width: 29%;
+
+  left: 51%;
+  top: 37%;
+
+  transform: rotate(166deg);
+}
+
+.selected-projects .line-c {
+  width: 27%;
+
+  left: 27%;
+  top: 70%;
+
+  transform: rotate(-15deg);
+}
+
+.selected-projects .line-d {
+  width: 27%;
+
+  left: 51%;
+  top: 70%;
+
+  transform: rotate(195deg);
+}
+
+.selected-projects .line-e {
+  width: 21%;
+
+  left: 39%;
+  top: 75%;
+
+  transform: rotate(90deg);
+
+  opacity: 0.45;
+}
+
+.selected-projects .sp-flow-stats {
+  position: absolute;
+
+  right: 4%;
+  bottom: 10%;
+
+  z-index: 10;
+
+  display: flex;
+
+  gap: 5px;
+}
+
+.selected-projects .sp-flow-stats div {
+  min-width: 54px;
+
+  padding: 7px 8px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  background:
+    rgba(9, 13, 16, 0.72);
+}
+
+.selected-projects .sp-flow-stats small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.2);
+
+  font-size: 4px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-flow-stats strong {
+  color:
+    rgba(255, 255, 255, 0.58);
+
+  font-family: var(--font-display);
+
+  font-size: 8px;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.selected-projects .sp-project-info {
+  min-width: 0;
+
+  min-height: 410px;
+
+  padding: 27px 29px 24px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.008),
+      transparent 55%
+    );
+}
+
+.selected-projects .sp-info-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.selected-projects .sp-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color:
+    rgba(200, 255, 56, 0.65);
+
+  font-size: 6px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-status span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--green);
+
+  box-shadow:
+    0 0 9px
+    rgba(200, 255, 56, 0.5);
+}
+
+.selected-projects .sp-info-id {
+  color:
+    rgba(255, 255, 255, 0.15);
+
+  font-size: 6px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-project-main {
+  margin: auto 0;
+}
+
+.selected-projects .sp-project-heading {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-top: 45px;
+}
+
+.selected-projects .sp-project-kicker {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color:
+    rgba(200, 255, 56, 0.55);
+
+  font-size: 6px;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+.selected-projects .sp-project-heading h3 {
+  max-width: 500px;
+
+  margin: 0;
+
+  color: var(--text);
+
+  font-family: var(--font-display);
+
+  font-size:
+    clamp(
+      2.7rem,
+      3.5vw,
+      4.5rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.86;
+
+  letter-spacing: -0.07em;
+}
+
+.selected-projects .sp-project-open {
+  width: 36px;
+  height: 36px;
+
+  flex: 0 0 auto;
+
+  display: grid;
+
+  place-items: center;
+
+  margin-top: 1px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+
+  color:
+    rgba(255, 255, 255, 0.4);
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.selected-projects .sp-project-open:hover {
+  color: var(--green);
+
+  border-color:
+    rgba(200, 255, 56, 0.25);
+
+  transform:
+    translate(2px, -2px);
+}
+
+.selected-projects .sp-project-description {
+  max-width: 470px;
+
+  margin: 24px 0 21px;
+
+  color: var(--text-soft);
+
+  font-size: 10px;
+
+  line-height: 1.65;
+}
+
+.selected-projects .sp-stack {
+  padding-top: 13px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.05);
+}
+
+.selected-projects .sp-stack > span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color:
+    rgba(255, 255, 255, 0.18);
+
+  font-size: 5px;
+
+  letter-spacing: 0.11em;
+}
+
+.selected-projects .sp-stack > div {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.selected-projects .sp-stack > div > span {
+  padding: 5px 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+
+  color:
+    rgba(255, 255, 255, 0.32);
+
+  font-size: 5px;
+
+  letter-spacing: 0.07em;
+}
+
+.selected-projects .sp-project-footer {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+}
+
+.selected-projects .sp-project-metric {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.selected-projects .sp-project-metric strong {
+  display: block;
+
+  color: var(--text);
+
+  font-family: var(--font-display);
+
+  font-size: 20px;
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  letter-spacing: -0.05em;
+}
+
+.selected-projects .sp-project-metric span {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    rgba(255, 255, 255, 0.2);
+
+  font-size: 5px;
+
+  letter-spacing: 0.1em;
+}
+
+.selected-projects .sp-project-metric > svg {
+  color:
+    rgba(200, 255, 56, 0.35);
+}
+
+.selected-projects .sp-project-tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: flex-end;
+
+  gap: 5px;
+}
+
+.selected-projects .sp-project-tags span {
+  padding: 5px 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+
+  color:
+    rgba(255, 255, 255, 0.26);
+
+  font-size: 5px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.selected-projects .sp-projects-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-top: 24px;
+
+  padding-top: 20px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+}
+
+.selected-projects .sp-footer-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color:
+    rgba(200, 255, 56, 0.4);
+
+  font-size: 5px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+.selected-projects .sp-projects-footer p {
+  max-width: 620px;
+
+  margin: 0;
+
+  color: var(--text-soft);
+
+  font-family: var(--font-display);
+
+  font-size: 17px;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.04em;
+}
+
+.selected-projects .sp-projects-footer p strong {
+  color: var(--text);
+}
+
+.selected-projects .sp-projects-footer > a {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--green);
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .selected-projects .sp-section-header {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .selected-projects .sp-project-body {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-projects .sp-visual {
+    min-height: 350px;
+
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      rgba(255, 255, 255, 0.06);
+  }
+
+  .selected-projects .sp-project-info {
+    min-height: 360px;
+  }
+
+  .selected-projects .sp-project-heading {
+    margin-top: 30px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .selected-projects {
+    padding-top: 72px;
+    padding-bottom: 82px;
+  }
+
+  .selected-projects .sp-section-header {
+    margin-bottom: 31px;
+  }
+
+  .selected-projects .sp-section-header h2 {
+    font-size:
+      clamp(
+        2.55rem,
+        11.5vw,
+        4rem
+      );
+  }
+
+  .selected-projects .sp-projects-list {
+    gap: 10px;
+  }
+
+  .selected-projects .sp-project-top {
+    height: 42px;
+
+    padding: 0 11px;
+
+    grid-template-columns:
+      35px
+      minmax(0, 1fr);
+  }
+
+  .selected-projects .sp-project-system {
+    display: none;
+  }
+
+  .selected-projects .sp-visual {
+    min-height: 290px;
+  }
+
+  .selected-projects .sp-dashboard-window {
+    top: 9%;
+    right: 6%;
+    bottom: 10%;
+    left: 6%;
+  }
+
+  .selected-projects .sp-commerce-product {
+    width: 82%;
+  }
+
+  .selected-projects .sp-commerce-floating {
+    right: 5%;
+    bottom: 8%;
+  }
+
+  .selected-projects .sp-commerce-cart {
+    left: 4%;
+  }
+
+  .selected-projects .sp-flow-node {
+    width: 29px;
+    height: 29px;
+  }
+
+  .selected-projects .sp-flow-center {
+    width: 49px;
+    height: 49px;
+  }
+
+  .selected-projects .sp-flow-stats {
+    right: 4%;
+    bottom: 7%;
+
+    gap: 4px;
+  }
+
+  .selected-projects .sp-flow-stats div {
+    min-width: 47px;
+
+    padding: 6px;
+  }
+
+  .selected-projects .sp-project-info {
+    min-height: 330px;
+
+    padding: 22px 17px;
+  }
+
+  .selected-projects .sp-info-top {
+    margin-bottom: 4px;
+  }
+
+  .selected-projects .sp-project-heading {
+    margin-top: 28px;
+
+    gap: 10px;
+  }
+
+  .selected-projects .sp-project-heading h3 {
+    font-size:
+      clamp(
+        2.3rem,
+        11.5vw,
+        3.6rem
+      );
+  }
+
+  .selected-projects .sp-project-open {
+    width: 33px;
+    height: 33px;
+  }
+
+  .selected-projects .sp-project-description {
+    margin-top: 19px;
+
+    font-size: 10px;
+  }
+
+  .selected-projects .sp-project-footer {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .selected-projects .sp-project-tags {
+    justify-content: flex-start;
+  }
+
+  .selected-projects .sp-projects-footer {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 17px;
+  }
+
+  .selected-projects .sp-projects-footer p {
+    font-size: 16px;
+  }
+}

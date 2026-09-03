@@ -1,7 +1,8 @@
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowDownRight, ArrowRight, Sparkles } from "lucide-react";
 import { useEffect } from "react";
+import HeroScene3D from "./HeroScene3D";
 import { animateHero } from "../lib/motion";
-import { HeroScene3D } from "./HeroScene3D";
+import "./Hero.css";
 
 export function Hero() {
   useEffect(() => {
@@ -9,116 +10,164 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="hero" id="top">
-      <div className="hero-glow" aria-hidden="true" />
+    <section className="hero" id="hero">
+      <div className="hero-grid" />
 
-      <div className="container">
-        <div className="hero-top">
-          <div className="hero-badge hero-reveal">
-            <span className="hero-badge-dot" />
-            Projetos digitais sob medida
+      <div className="hero-glow hero-glow-left" />
+      <div className="hero-glow hero-glow-right" />
+
+      <div className="hero-inner">
+        <div className="hero-topline">
+          <div className="hero-index">
+            <span className="hero-index-dot" />
+            <span>01</span>
+            <span>/</span>
+            <span>DIGITAL STUDIO</span>
           </div>
 
-          <span className="hero-counter hero-reveal">
-            ARC / 001
-          </span>
+          <div className="hero-status">
+            <span className="hero-status-pulse" />
+            <span>SISTEMA ONLINE</span>
+          </div>
         </div>
 
         <div className="hero-content">
           <div className="hero-copy">
-            <p className="hero-eyebrow hero-reveal">
-              Da ideia ao produto
-            </p>
+            <div className="hero-kicker">
+              <Sparkles size={13} strokeWidth={1.7} />
+              <span>PROJETOS DIGITAIS SOB MEDIDA</span>
+            </div>
 
             <h1 className="hero-title">
-              <span className="hero-line hero-reveal">
-                O que você
+              <span className="hero-title-line hero-title-white">
+                Transformamos
               </span>
 
-              <span className="hero-line hero-line-accent hero-reveal">
-                quer construir?
+              <span className="hero-title-line hero-title-muted">
+                ideias em
+              </span>
+
+              <span className="hero-title-line hero-title-accent">
+                produtos reais.
               </span>
             </h1>
 
-            <p className="hero-description hero-reveal">
-              Explique sua ideia, necessidade ou problema.
-              A ARC transforma isso em uma solução digital
-              clara, planejada e pronta para ser construída.
+            <p className="hero-description">
+              Sua ideia começa aqui. A ARC transforma problemas,
+              operações e oportunidades em experiências digitais
+              pensadas para funcionar de verdade.
             </p>
 
-            <div className="hero-actions hero-reveal">
-              <a
-                href="#project"
-                className="primary-button"
-              >
-                Descrever meu projeto
-
-                <ArrowRight
-                  size={17}
-                  strokeWidth={1.9}
-                />
+            <div className="hero-actions">
+              <a className="hero-primary-button" href="#project">
+                <span>DESCREVER MEU PROJETO</span>
+                <ArrowRight size={16} strokeWidth={1.8} />
               </a>
 
-              <a
-                href="#services"
-                className="secondary-link"
-              >
-                Ver soluções
-
-                <ArrowRight
-                  size={16}
-                  strokeWidth={1.7}
-                />
+              <a className="hero-secondary-button" href="#services">
+                <span>EXPLORAR SOLUÇÕES</span>
+                <ArrowDownRight size={16} strokeWidth={1.8} />
               </a>
+            </div>
+
+            <div className="hero-microcopy">
+              <span>SEM TEMPLATE</span>
+              <span className="hero-micro-divider" />
+              <span>SEM LIMITES</span>
+              <span className="hero-micro-divider" />
+              <span>FEITO SOB MEDIDA</span>
             </div>
           </div>
 
-          <div className="hero-panel-wrap hero-reveal">
-            <div className="hero-panel-header-custom">
-              <div>
-                <span>ARC / DIGITAL SYSTEM</span>
-
-                <strong>
-                  Build something real.
-                </strong>
-              </div>
-
-              <Sparkles
-                size={17}
-                strokeWidth={1.5}
-              />
+          <div className="hero-visual-column">
+            <div className="hero-visual-label hero-visual-label-top">
+              <span>ARC / 001</span>
+              <span>LIVE PREVIEW</span>
             </div>
 
-            <HeroScene3D />
+            <div className="hero-visual">
+              <div className="hero-visual-frame">
+                <div className="hero-visual-corner hero-visual-corner-tl" />
+                <div className="hero-visual-corner hero-visual-corner-tr" />
+                <div className="hero-visual-corner hero-visual-corner-bl" />
+                <div className="hero-visual-corner hero-visual-corner-br" />
 
-            <div className="hero-panel-footer-custom">
-              <span>WEB</span>
-              <span>API</span>
-              <span>AI</span>
-              <span>DATA</span>
+                <div className="hero-system-header">
+                  <div>
+                    <span className="hero-system-label">
+                      ARC / DIGITAL SYSTEM
+                    </span>
 
-              <span>
-                01 / 04
-              </span>
+                    <strong>Build something real.</strong>
+                  </div>
+
+                  <div className="hero-system-icon">
+                    <Sparkles size={15} strokeWidth={1.5} />
+                  </div>
+                </div>
+
+                <div className="hero-scene">
+                  <HeroScene3D />
+                </div>
+
+                <div className="hero-system-status">
+                  <div className="hero-system-live">
+                    <span className="hero-system-live-dot" />
+                    <span>CONNECTED</span>
+                  </div>
+
+                  <span>3D ENGINE</span>
+                </div>
+
+                <div className="hero-system-footer">
+                  <span>WEB</span>
+                  <span>API</span>
+                  <span>AI</span>
+                  <span>DATA</span>
+
+                  <span className="hero-system-page">01 / 04</span>
+                </div>
+              </div>
+
+              <div className="hero-floating-card hero-floating-card-top">
+                <span>ACTIVE</span>
+                <strong>01</strong>
+              </div>
+
+              <div className="hero-floating-card hero-floating-card-bottom">
+                <span>PROJECT TYPE</span>
+                <strong>DIGITAL PRODUCT</strong>
+              </div>
+            </div>
+
+            <div className="hero-visual-label hero-visual-label-bottom">
+              <span>INTERACTIVE SYSTEM</span>
+
+              <div className="hero-label-line" />
+
+              <span>SCROLL TO EXPLORE</span>
             </div>
           </div>
         </div>
 
         <div className="hero-bottom">
-          <span>Website</span>
-          <span>Software</span>
-          <span>Automation</span>
-          <span>AI</span>
-          <span>E-commerce</span>
-          <span>Integrations</span>
+          <div className="hero-tags">
+            <span>WEBSITE</span>
+            <span>SOFTWARE</span>
+            <span>AUTOMATION</span>
+            <span>AI</span>
+            <span>E-COMMERCE</span>
+            <span>INTEGRATIONS</span>
+          </div>
 
-          <span className="hero-bottom-grow" />
-
-          <span>
-            Scroll para explorar ↓
-          </span>
+          <div className="hero-scroll">
+            <span>EXPLORE</span>
+            <ArrowDownRight size={14} strokeWidth={1.5} />
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+export default Hero;

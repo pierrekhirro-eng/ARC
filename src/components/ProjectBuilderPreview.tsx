@@ -1,10 +1,24 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import {
+  Activity,
+  ArrowLeft,
   ArrowRight,
+  Bot,
   Check,
+  Database,
   FileText,
+  Globe2,
+  Layers3,
+  Network,
   Paperclip,
+  Rocket,
+  ShoppingBag,
   Sparkles,
+  Smartphone,
+  Upload,
+  Workflow,
+  X,
+  Zap,
 } from "lucide-react";
 
 import {
@@ -12,67 +26,349 @@ import {
   type ProjectVisualType,
 } from "./ProjectPreview3D";
 
-const projectTypes: ProjectVisualType[] = [
-  "Website",
-  "Sistema",
-  "E-commerce",
-  "Automação",
-  "IA",
-  "Aplicativo",
+import "./ProjectBuilderPreview.css";
+
+type Step = 1 | 2 | 3 | 4;
+
+interface ProjectData {
+  type: ProjectVisualType;
+  requirements: string[];
+  description: string;
+  files: File[];
+}
+
+interface ProjectTypeConfig {
+  type: ProjectVisualType;
+  code: string;
+  category: string;
+  title: string;
+  shortDescription: string;
+  environment: string;
+  status: string;
+  statusLabel: string;
+  icon: typeof Globe2;
+  metrics: string[];
+}
+
+const projectTypes: ProjectTypeConfig[] = [
+  {
+    type: "Website",
+    code: "WEB-01",
+    category: "WEB / EXPERIENCE",
+    title: "Digital interface",
+    shortDescription:
+      "Uma experiência web pensada para apresentar, posicionar ou converter.",
+    environment: "INTERFACE ACTIVE",
+    status: "LIVE PREVIEW",
+    statusLabel: "WEB ENGINE",
+    icon: Globe2,
+    metrics: ["UX/UI", "RESPONSIVE", "WEB"],
+  },
+  {
+    type: "Sistema",
+    code: "SYS-02",
+    category: "SYSTEM / ARCHITECTURE",
+    title: "Connected system",
+    shortDescription:
+      "Uma plataforma digital para organizar sua operação e facilitar processos.",
+    environment: "ARCHITECTURE ACTIVE",
+    status: "SYSTEM ONLINE",
+    statusLabel: "SYSTEM CORE",
+    icon: Layers3,
+    metrics: ["API", "DATABASE", "CORE"],
+  },
+  {
+    type: "E-commerce",
+    code: "COM-03",
+    category: "COMMERCE / ENGINE",
+    title: "Commerce system",
+    shortDescription:
+      "Uma experiência de compra conectada ao seu negócio.",
+    environment: "COMMERCE ACTIVE",
+    status: "STORE ONLINE",
+    statusLabel: "COMMERCE CORE",
+    icon: ShoppingBag,
+    metrics: ["STORE", "CHECKOUT", "PAYMENTS"],
+  },
+  {
+    type: "Automação",
+    code: "AUT-04",
+    category: "AUTOMATION / FLOW",
+    title: "Process engine",
+    shortDescription:
+      "Fluxos inteligentes para reduzir tarefas manuais e conectar processos.",
+    environment: "AUTOMATION ACTIVE",
+    status: "FLOW ACTIVE",
+    statusLabel: "FLOW ENGINE",
+    icon: Workflow,
+    metrics: ["TRIGGER", "FLOW", "OUTPUT"],
+  },
+  {
+    type: "IA",
+    code: "AI-05",
+    category: "AI / INTELLIGENCE",
+    title: "Intelligence core",
+    shortDescription:
+      "Inteligência artificial integrada ao produto, operação ou atendimento.",
+    environment: "INTELLIGENCE ACTIVE",
+    status: "MODEL ONLINE",
+    statusLabel: "AI ENGINE",
+    icon: Bot,
+    metrics: ["MODEL", "AGENT", "REALTIME"],
+  },
+  {
+    type: "Aplicativo",
+    code: "APP-06",
+    category: "MOBILE / PRODUCT",
+    title: "Mobile product",
+    shortDescription:
+      "Um produto mobile pensado para seus usuários e objetivos.",
+    environment: "MOBILE ACTIVE",
+    status: "APP ONLINE",
+    statusLabel: "MOBILE CORE",
+    icon: Smartphone,
+    metrics: ["MOBILE", "UI", "DEVICE"],
+  },
+  {
+    type: "Custom",
+    code: "CUS-07",
+    category: "CUSTOM / ARCHITECTURE",
+    title: "Custom system",
+    shortDescription:
+      "Uma solução criada especialmente para sua necessidade.",
+    environment: "CUSTOM ACTIVE",
+    status: "BUILD ACTIVE",
+    statusLabel: "CUSTOM CORE",
+    icon: Sparkles,
+    metrics: ["CUSTOM", "MODULES", "BUILD"],
+  },
 ];
 
 const requirements = [
-  "Login",
-  "Pagamentos",
-  "Dashboard",
-  "Chat",
-  "Banco de dados",
-  "Integrações",
+  {
+    label: "Login",
+    icon: Network,
+  },
+  {
+    label: "Pagamentos",
+    icon: Zap,
+  },
+  {
+    label: "Dashboard",
+    icon: Activity,
+  },
+  {
+    label: "Chat",
+    icon: Bot,
+  },
+  {
+    label: "Banco de dados",
+    icon: Database,
+  },
+  {
+    label: "Integrações",
+    icon: Layers3,
+  },
 ];
 
-const typeDescriptions: Record<ProjectVisualType, string> = {
-  Website:
-    "Uma experiência web pensada para apresentar, posicionar ou converter.",
-  Sistema:
-    "Uma plataforma digital para organizar sua operação e facilitar processos.",
-  "E-commerce":
-    "Uma experiência de compra conectada ao seu negócio.",
-  Automação:
-    "Fluxos inteligentes para reduzir tarefas manuais e conectar processos.",
-  IA:
-    "Inteligência artificial integrada ao produto, operação ou atendimento.",
-  Aplicativo:
-    "Um produto mobile pensado para seus usuários e objetivos.",
-  Custom:
-    "Uma solução criada especialmente para sua necessidade.",
-};
+const stepLabels = [
+  "Escolha o projeto",
+  "Defina as funções",
+  "Explique a ideia",
+  "Revise tudo",
+];
+
+const stepDescriptions = [
+  "Escolha o formato que mais se aproxima daquilo que você quer construir.",
+  "Adicione as funcionalidades que você considera importantes para o projeto.",
+  "Você não precisa conhecer tecnologia. Explique o problema, objetivo ou ideia.",
+  "Confira as informações antes de enviar o projeto para análise.",
+];
+
+const typeDescriptions: Record<
+  ProjectVisualType,
+  string
+> = Object.fromEntries(
+  projectTypes.map((item) => [
+    item.type,
+    item.shortDescription,
+  ]),
+) as Record<ProjectVisualType, string>;
 
 export function ProjectBuilderPreview() {
-  const [selectedType, setSelectedType] =
-    useState<ProjectVisualType>("Website");
+  const [step, setStep] = useState<Step>(1);
 
-  const [selectedRequirements, setSelectedRequirements] =
-    useState<string[]>(["Login", "Dashboard"]);
+  const [project, setProject] =
+    useState<ProjectData>({
+      type: "Website",
+      requirements: [],
+      description: "",
+      files: [],
+    });
 
-  const [description, setDescription] = useState("");
-
-  const selectedDescription = useMemo(
-    () => typeDescriptions[selectedType],
-    [selectedType],
+  const selectedConfig = useMemo(
+    () =>
+      projectTypes.find(
+        (item) => item.type === project.type,
+      ) ?? projectTypes[0],
+    [project.type],
   );
 
-  function toggleRequirement(requirement: string) {
-    setSelectedRequirements((current) => {
-      if (current.includes(requirement)) {
-        return current.filter((item) => item !== requirement);
-      }
+  const selectedDescription = useMemo(
+    () => typeDescriptions[project.type],
+    [project.type],
+  );
 
-      return [...current, requirement];
+  const SelectedIcon = selectedConfig.icon;
+
+  const progress = `${step} / 04`;
+  const progressPercent = `${step * 25}%`;
+
+  function selectType(type: ProjectVisualType) {
+    setProject((current) => ({
+      ...current,
+      type,
+    }));
+  }
+
+  function toggleRequirement(
+    requirement: string,
+  ) {
+    setProject((current) => {
+      const exists =
+        current.requirements.includes(
+          requirement,
+        );
+
+      return {
+        ...current,
+        requirements: exists
+          ? current.requirements.filter(
+              (item) =>
+                item !== requirement,
+            )
+          : [
+              ...current.requirements,
+              requirement,
+            ],
+      };
     });
   }
 
+  function updateDescription(
+    value: string,
+  ) {
+    if (value.length > 1200) {
+      return;
+    }
+
+    setProject((current) => ({
+      ...current,
+      description: value,
+    }));
+  }
+
+  function addFiles(
+    event: ChangeEvent<HTMLInputElement>,
+  ) {
+    const selectedFiles = Array.from(
+      event.target.files ?? [],
+    );
+
+    setProject((current) => ({
+      ...current,
+      files: [
+        ...current.files,
+        ...selectedFiles,
+      ].slice(0, 8),
+    }));
+
+    event.target.value = "";
+  }
+
+  function removeFile(index: number) {
+    setProject((current) => ({
+      ...current,
+      files: current.files.filter(
+        (_, fileIndex) =>
+          fileIndex !== index,
+      ),
+    }));
+  }
+
+  function canContinue() {
+    if (step === 1) {
+      return Boolean(project.type);
+    }
+
+    if (step === 2) {
+      return project.requirements.length > 0;
+    }
+
+    if (step === 3) {
+      return (
+        project.description.trim().length >=
+        12
+      );
+    }
+
+    return true;
+  }
+
+  function nextStep() {
+    if (!canContinue()) {
+      return;
+    }
+
+    setStep((current) =>
+      current < 4
+        ? ((current + 1) as Step)
+        : current,
+    );
+  }
+
+  function previousStep() {
+    setStep((current) =>
+      current > 1
+        ? ((current - 1) as Step)
+        : current,
+    );
+  }
+
+  function goToStep(targetStep: Step) {
+    if (targetStep > step) {
+      return;
+    }
+
+    setStep(targetStep);
+  }
+
+  function submitProject() {
+    const payload = {
+      type: project.type,
+      requirements: project.requirements,
+      description:
+        project.description.trim(),
+      files: project.files.map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      })),
+    };
+
+    console.log(
+      "ARC PROJECT PAYLOAD:",
+      payload,
+    );
+
+    setStep(4);
+  }
+
   return (
-    <section className="section project-section" id="project">
+    <section
+      className="section project-section"
+      id="project"
+    >
       <div className="container">
         <div className="project-section-top">
           <div className="project-section-heading">
@@ -89,9 +385,9 @@ export function ProjectBuilderPreview() {
 
           <div className="project-section-copy">
             <p className="section-description">
-              Escolha o tipo de projeto, adicione o que ele
-              precisa fazer e conte sua ideia. A visualização
-              muda enquanto você monta.
+              Monte seu projeto em algumas
+              etapas. O resultado acompanha
+              suas escolhas em tempo real.
             </p>
 
             <div className="project-trust">
@@ -108,8 +404,16 @@ export function ProjectBuilderPreview() {
           </div>
         </div>
 
-        <div className="builder-layout">
-          <div className="builder-info-panel">
+        <div
+          className={`builder-layout builder-layout-${project.type
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")}`}
+        >
+          {/* =================================================
+              LEFT PANEL
+          ================================================= */}
+
+          <aside className="builder-info-panel">
             <div className="builder-info-top">
               <span className="builder-eyebrow">
                 PROJECT BUILDER
@@ -117,321 +421,860 @@ export function ProjectBuilderPreview() {
 
               <div className="builder-live">
                 <span />
-                Interactive
+                Live
               </div>
             </div>
 
             <div className="builder-progress">
               <div className="builder-progress-header">
-                <span>Seu projeto</span>
-                <span>01 / 04</span>
+                <span>
+                  {stepLabels[step - 1]}
+                </span>
+
+                <span>{progress}</span>
               </div>
 
               <div className="builder-progress-bar">
-                <span />
+                <span
+                  style={{
+                    width: progressPercent,
+                  }}
+                />
               </div>
             </div>
 
             <div className="builder-info-main">
               <span className="builder-small-label">
-                Visualização em tempo real
+                Etapa atual
               </span>
 
               <h3>
-                Monte a ideia.
-                <br />
-                Veja a estrutura.
+                {step === 1 && (
+                  <>
+                    Comece pelo
+                    <br />
+                    essencial.
+                  </>
+                )}
+
+                {step === 2 && (
+                  <>
+                    Defina o que
+                    <br />
+                    precisa acontecer.
+                  </>
+                )}
+
+                {step === 3 && (
+                  <>
+                    Conte a ideia
+                    <br />
+                    do seu jeito.
+                  </>
+                )}
+
+                {step === 4 && (
+                  <>
+                    Tudo pronto
+                    <br />
+                    para revisar.
+                  </>
+                )}
               </h3>
 
               <p>
-                Cada escolha muda a representação do projeto
-                ao lado. Assim você consegue visualizar a
-                direção antes mesmo de começarmos a construir.
+                {stepDescriptions[step - 1]}
               </p>
             </div>
 
             <div className="builder-info-list">
-              <div className="builder-info-list-item active">
-                <span>01</span>
-                <p>Escolha o tipo de projeto</p>
-              </div>
+              {stepLabels.map(
+                (label, index) => {
+                  const itemStep =
+                    (index + 1) as Step;
 
-              <div className="builder-info-list-item">
-                <span>02</span>
-                <p>Defina as funcionalidades</p>
-              </div>
+                  const active =
+                    itemStep === step;
 
-              <div className="builder-info-list-item">
-                <span>03</span>
-                <p>Explique sua ideia</p>
-              </div>
+                  const completed =
+                    itemStep < step;
 
-              <div className="builder-info-list-item">
-                <span>04</span>
-                <p>Envie para análise</p>
-              </div>
+                  return (
+                    <button
+                      type="button"
+                      key={label}
+                      className={`builder-info-list-item ${
+                        active
+                          ? "active"
+                          : ""
+                      } ${
+                        completed
+                          ? "completed"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        goToStep(itemStep)
+                      }
+                      disabled={
+                        itemStep > step
+                      }
+                    >
+                      <span>
+                        {completed ? (
+                          <Check size={12} />
+                        ) : (
+                          `0${itemStep}`
+                        )}
+                      </span>
+
+                      <p>{label}</p>
+
+                      {active && (
+                        <span className="builder-step-marker">
+                          ACTIVE
+                        </span>
+                      )}
+                    </button>
+                  );
+                },
+              )}
             </div>
 
             <div className="builder-current-selection">
-              <span>Selecionado</span>
-
-              <strong>{selectedType}</strong>
-
-              <p>{selectedDescription}</p>
-            </div>
-          </div>
-
-          <div className="builder-workspace">
-            <div className="workspace-header">
-              <div>
-                <span className="workspace-label">
-                  LIVE PREVIEW
+              <div className="builder-current-selection-top">
+                <span>
+                  Projeto atual
                 </span>
 
-                <h3>
-                  {selectedType}
-                </h3>
+                <span className="builder-current-code">
+                  {selectedConfig.code}
+                </span>
+              </div>
+
+              <div className="builder-current-project">
+                <div className="builder-current-icon">
+                  <SelectedIcon
+                    size={18}
+                    strokeWidth={1.4}
+                  />
+                </div>
+
+                <div>
+                  <strong>
+                    {project.type}
+                  </strong>
+
+                  <p>
+                    {selectedDescription}
+                  </p>
+                </div>
+              </div>
+
+              <div className="builder-current-metrics">
+                {selectedConfig.metrics.map(
+                  (metric) => (
+                    <span key={metric}>
+                      {metric}
+                    </span>
+                  ),
+                )}
+              </div>
+            </div>
+          </aside>
+
+          {/* =================================================
+              RIGHT WORKSPACE
+          ================================================= */}
+
+          <div
+            className={`builder-workspace builder-workspace-${project.type
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")}`}
+          >
+            <div className="workspace-header">
+              <div className="workspace-header-main">
+                <div className="workspace-header-icon">
+                  <SelectedIcon
+                    size={17}
+                    strokeWidth={1.35}
+                  />
+                </div>
+
+                <div>
+                  <span className="workspace-label">
+                    {selectedConfig.category}
+                  </span>
+
+                  <h3>
+                    {selectedConfig.title}
+                  </h3>
+                </div>
               </div>
 
               <div className="workspace-status">
                 <span />
-                3D
+
+                {selectedConfig.status}
               </div>
             </div>
 
-            <ProjectPreview3D
-              type={selectedType}
-            />
+            <div className="workspace-environment">
+              <div className="environment-rail environment-rail-left">
+                <span>ARC</span>
+                <strong>
+                  {selectedConfig.code}
+                </strong>
+              </div>
+
+              <div className="environment-rail environment-rail-right">
+                <span>BUILD</span>
+                <strong>LIVE</strong>
+              </div>
+
+              <div className="environment-crosshair environment-crosshair-one" />
+              <div className="environment-crosshair environment-crosshair-two" />
+
+              <div className="environment-data environment-data-top">
+                <span>
+                  ENVIRONMENT
+                </span>
+
+                <strong>
+                  {selectedConfig.environment}
+                </strong>
+              </div>
+
+              <div className="environment-data environment-data-bottom">
+                <span>
+                  ACTIVE MODULE
+                </span>
+
+                <strong>
+                  {selectedConfig.statusLabel}
+                </strong>
+              </div>
+
+              <ProjectPreview3D
+                type={project.type}
+              />
+
+              <div className="environment-side-meter environment-side-meter-left">
+                <span>01</span>
+                <i />
+                <span>06</span>
+              </div>
+
+              <div className="environment-side-meter environment-side-meter-right">
+                <span>ARC</span>
+                <i />
+                <span>SYS</span>
+              </div>
+            </div>
 
             <div className="workspace-caption">
-              <span>
-                Arraste para explorar
-              </span>
+              <div className="workspace-caption-primary">
+                <span className="workspace-caption-dot" />
 
-              <span>
-                Rotação automática
-              </span>
+                <span>
+                  {step === 1 &&
+                    `Selecione uma categoria para reconfigurar o ambiente ${project.type}.`}
+
+                  {step === 2 &&
+                    `A estrutura ${project.type} está recebendo novas funções.`}
+
+                  {step === 3 &&
+                    `A direção visual está sincronizada com sua ideia.`}
+
+                  {step === 4 &&
+                    `Prévia final de ${project.type} pronta para revisão.`}
+                </span>
+              </div>
+
+              <div className="workspace-caption-metrics">
+                {selectedConfig.metrics.map(
+                  (metric) => (
+                    <span key={metric}>
+                      {metric}
+                    </span>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </div>
 
+        {/* =================================================
+            FORM
+        ================================================= */}
+
         <div className="builder-form-card">
-          <div className="builder-form-header">
-            <div>
-              <span className="builder-form-label">
-                ETAPA 01
-              </span>
+          {step === 1 && (
+            <div className="builder-form-section">
+              <div className="builder-form-header">
+                <div>
+                  <span className="builder-form-label">
+                    ETAPA 01
+                  </span>
 
-              <h3>
-                O que você quer criar?
-              </h3>
+                  <h3>
+                    O que você quer criar?
+                  </h3>
 
-              <p>
-                Escolha a opção que mais se aproxima
-                da sua ideia.
-              </p>
+                  <p>
+                    Escolha o tipo de projeto.
+                  </p>
+                </div>
+
+                <div className="builder-form-icon">
+                  <Sparkles
+                    size={18}
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </div>
+
+              <div className="builder-question">
+                <span>01</span>
+
+                <div>
+                  <strong>
+                    Tipo de projeto
+                  </strong>
+
+                  <small>
+                    Clique para trocar o
+                    ambiente e a visualização
+                    3D.
+                  </small>
+                </div>
+              </div>
+
+              <div className="builder-type-grid">
+                {projectTypes.map(
+                  (item) => {
+                    const active =
+                      project.type ===
+                      item.type;
+
+                    const Icon =
+                      item.icon;
+
+                    return (
+                      <button
+                        type="button"
+                        key={item.type}
+                        className={`builder-type ${
+                          active
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          selectType(
+                            item.type,
+                          )
+                        }
+                        aria-pressed={active}
+                      >
+                        <div className="builder-type-icon">
+                          <Icon
+                            size={15}
+                            strokeWidth={
+                              1.35
+                            }
+                          />
+                        </div>
+
+                        <div className="builder-type-content">
+                          <span>
+                            {item.type}
+                          </span>
+
+                          <small>
+                            {item.code}
+                          </small>
+                        </div>
+
+                        {active && (
+                          <Check
+                            size={14}
+                            strokeWidth={2}
+                          />
+                        )}
+                      </button>
+                    );
+                  },
+                )}
+              </div>
             </div>
+          )}
 
-            <div className="builder-form-icon">
-              <Sparkles
-                size={18}
-                strokeWidth={1.5}
+          {step === 2 && (
+            <div className="builder-form-section">
+              <div className="builder-form-header">
+                <div>
+                  <span className="builder-form-label">
+                    ETAPA 02
+                  </span>
+
+                  <h3>
+                    O que ele precisa
+                    fazer?
+                  </h3>
+
+                  <p>
+                    Você pode selecionar
+                    várias opções.
+                  </p>
+                </div>
+
+                <div className="builder-form-icon">
+                  <FileText
+                    size={18}
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </div>
+
+              <div className="builder-question">
+                <span>02</span>
+
+                <div>
+                  <strong>
+                    Funcionalidades
+                  </strong>
+
+                  <small>
+                    Selecione tudo o que
+                    fizer sentido.
+                  </small>
+                </div>
+              </div>
+
+              <div className="builder-requirements">
+                {requirements.map(
+                  (item) => {
+                    const active =
+                      project.requirements.includes(
+                        item.label,
+                      );
+
+                    const Icon =
+                      item.icon;
+
+                    return (
+                      <button
+                        type="button"
+                        key={item.label}
+                        className={`builder-requirement ${
+                          active
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          toggleRequirement(
+                            item.label,
+                          )
+                        }
+                        aria-pressed={active}
+                      >
+                        <div className="builder-requirement-main">
+                          <Icon
+                            size={14}
+                            strokeWidth={
+                              1.4
+                            }
+                          />
+
+                          <span>
+                            {item.label}
+                          </span>
+                        </div>
+
+                        {active ? (
+                          <Check
+                            size={13}
+                            strokeWidth={2}
+                          />
+                        ) : (
+                          <span className="requirement-plus">
+                            +
+                          </span>
+                        )}
+                      </button>
+                    );
+                  },
+                )}
+              </div>
+
+              <div className="builder-selection-summary">
+                <span>
+                  Funcionalidades
+                  selecionadas
+                </span>
+
+                <strong>
+                  {String(
+                    project
+                      .requirements
+                      .length,
+                  ).padStart(2, "0")}
+                </strong>
+              </div>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="builder-form-section">
+              <div className="builder-form-header">
+                <div>
+                  <span className="builder-form-label">
+                    ETAPA 03
+                  </span>
+
+                  <h3>
+                    Conte sobre a
+                    ideia.
+                  </h3>
+
+                  <p>
+                    Escreva com suas
+                    próprias palavras.
+                  </p>
+                </div>
+
+                <div className="builder-form-icon">
+                  <FileText
+                    size={18}
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </div>
+
+              <div className="builder-question">
+                <span>03</span>
+
+                <div>
+                  <strong>
+                    Contexto do projeto
+                  </strong>
+
+                  <small>
+                    Explique o problema,
+                    objetivo ou resultado
+                    esperado.
+                  </small>
+                </div>
+              </div>
+
+              <textarea
+                className="builder-textarea"
+                value={
+                  project.description
+                }
+                onChange={(event) =>
+                  updateDescription(
+                    event.target.value,
+                  )
+                }
+                placeholder="Ex.: preciso de uma plataforma para minha empresa onde meus clientes possam..."
+                rows={7}
               />
-            </div>
-          </div>
 
-          <div className="builder-form-section">
-            <div className="builder-question">
-              <span>01</span>
+              <div className="builder-character-count">
+                <span>
+                  Mínimo recomendado:
+                  12 caracteres
+                </span>
 
-              <div>
-                <strong>
-                  Tipo de projeto
-                </strong>
-
-                <small>
-                  Clique para trocar a visualização 3D.
-                </small>
+                <span>
+                  {project.description.length}
+                  {" / 1200"}
+                </span>
               </div>
+
+              <div className="builder-upload">
+                <div className="builder-upload-icon">
+                  <Paperclip
+                    size={16}
+                    strokeWidth={1.6}
+                  />
+                </div>
+
+                <div className="builder-upload-copy">
+                  <strong>
+                    Possui arquivos de
+                    referência?
+                  </strong>
+
+                  <span>
+                    Imagens, briefing,
+                    PDF, documentos ou
+                    referências visuais.
+                  </span>
+                </div>
+
+                <label className="builder-upload-button">
+                  <Upload
+                    size={13}
+                    strokeWidth={1.6}
+                  />
+
+                  Adicionar
+
+                  <input
+                    type="file"
+                    hidden
+                    multiple
+                    onChange={addFiles}
+                    accept="image/*,.pdf,.doc,.docx,.txt"
+                  />
+                </label>
+              </div>
+
+              {project.files.length >
+                0 && (
+                <div className="builder-files">
+                  {project.files.map(
+                    (
+                      file,
+                      index,
+                    ) => (
+                      <div
+                        className="builder-file"
+                        key={`${file.name}-${index}`}
+                      >
+                        <div>
+                          <FileText
+                            size={14}
+                            strokeWidth={
+                              1.5
+                            }
+                          />
+
+                          <span>
+                            {file.name}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            removeFile(
+                              index,
+                            )
+                          }
+                          aria-label={`Remover ${file.name}`}
+                        >
+                          <X
+                            size={14}
+                            strokeWidth={
+                              1.7
+                            }
+                          />
+                        </button>
+                      </div>
+                    ),
+                  )}
+                </div>
+              )}
             </div>
+          )}
 
-            <div className="builder-type-grid">
-              {projectTypes.map((type) => {
-                const active = selectedType === type;
+          {step === 4 && (
+            <div className="builder-form-section">
+              <div className="builder-form-header">
+                <div>
+                  <span className="builder-form-label">
+                    ETAPA 04
+                  </span>
 
-                return (
+                  <h3>
+                    Revise seu projeto.
+                  </h3>
+
+                  <p>
+                    Tudo certo? Agora
+                    podemos enviar para
+                    análise.
+                  </p>
+                </div>
+
+                <div className="builder-form-icon">
+                  <Check
+                    size={19}
+                    strokeWidth={1.7}
+                  />
+                </div>
+              </div>
+
+              <div className="builder-review">
+                <div className="builder-review-item">
+                  <span>Tipo</span>
+
+                  <strong>
+                    {project.type}
+                  </strong>
+
                   <button
                     type="button"
-                    className={`builder-type ${
-                      active ? "active" : ""
-                    }`}
-                    key={type}
-                    onClick={() => setSelectedType(type)}
-                    aria-pressed={active}
-                  >
-                    <span>{type}</span>
-
-                    {active ? (
-                      <Check
-                        size={14}
-                        strokeWidth={2}
-                      />
-                    ) : (
-                      <ArrowRight
-                        size={14}
-                        strokeWidth={1.5}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="builder-form-section">
-            <div className="builder-question">
-              <span>02</span>
-
-              <div>
-                <strong>
-                  O que o projeto precisa fazer?
-                </strong>
-
-                <small>
-                  Selecione quantas funcionalidades quiser.
-                </small>
-              </div>
-            </div>
-
-            <div className="builder-requirements">
-              {requirements.map((requirement) => {
-                const active =
-                  selectedRequirements.includes(requirement);
-
-                return (
-                  <button
-                    type="button"
-                    className={`builder-requirement ${
-                      active ? "active" : ""
-                    }`}
-                    key={requirement}
                     onClick={() =>
-                      toggleRequirement(requirement)
+                      goToStep(1)
                     }
-                    aria-pressed={active}
                   >
-                    <span>{requirement}</span>
-
-                    {active ? (
-                      <Check
-                        size={13}
-                        strokeWidth={2}
-                      />
-                    ) : (
-                      <span className="requirement-plus">
-                        +
-                      </span>
-                    )}
+                    Editar
                   </button>
-                );
-              })}
-            </div>
-          </div>
+                </div>
 
-          <div className="builder-form-section">
-            <div className="builder-question">
-              <span>03</span>
+                <div className="builder-review-item">
+                  <span>
+                    Funcionalidades
+                  </span>
 
-              <div>
-                <strong>
-                  Conte sobre a ideia
-                </strong>
+                  <strong>
+                    {project.requirements
+                      .length
+                      ? project.requirements.join(
+                          " · ",
+                        )
+                      : "Nenhuma selecionada"}
+                  </strong>
 
-                <small>
-                  Não precisa escrever de forma técnica.
-                </small>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      goToStep(2)
+                    }
+                  >
+                    Editar
+                  </button>
+                </div>
+
+                <div className="builder-review-item">
+                  <span>Descrição</span>
+
+                  <strong>
+                    {project.description ||
+                      "Sem descrição"}
+                  </strong>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      goToStep(3)
+                    }
+                  >
+                    Editar
+                  </button>
+                </div>
+
+                <div className="builder-review-item">
+                  <span>Arquivos</span>
+
+                  <strong>
+                    {project.files
+                      .length === 0
+                      ? "Nenhum arquivo"
+                      : `${
+                          project.files
+                            .length
+                        } arquivo${
+                          project.files
+                            .length > 1
+                            ? "s"
+                            : ""
+                        }`}
+                  </strong>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      goToStep(3)
+                    }
+                  >
+                    Editar
+                  </button>
+                </div>
               </div>
             </div>
-
-            <textarea
-              className="builder-textarea"
-              value={description}
-              onChange={(event) =>
-                setDescription(event.target.value)
-              }
-              placeholder={
-                "Ex.: preciso de uma plataforma para minha empresa..."
-              }
-              rows={5}
-              aria-label="Descrição do projeto"
-            />
-
-            <div className="builder-character-count">
-              <span>
-                Quanto mais contexto, melhor.
-              </span>
-
-              <span>
-                {description.length} / 1200
-              </span>
-            </div>
-          </div>
-
-          <div className="builder-upload">
-            <div className="builder-upload-icon">
-              <Paperclip
-                size={16}
-                strokeWidth={1.6}
-              />
-            </div>
-
-            <div>
-              <strong>
-                Já possui arquivos?
-              </strong>
-
-              <span>
-                Briefing, referências, documentos ou imagens.
-              </span>
-            </div>
-
-            <button
-              type="button"
-              className="builder-upload-button"
-            >
-              Adicionar
-            </button>
-          </div>
+          )}
 
           <div className="builder-form-footer">
             <div className="builder-form-status">
-              <FileText
-                size={14}
-                strokeWidth={1.5}
-              />
+              {step > 1 ? (
+                <button
+                  type="button"
+                  className="builder-back-button"
+                  onClick={
+                    previousStep
+                  }
+                >
+                  <ArrowLeft
+                    size={14}
+                    strokeWidth={1.7}
+                  />
 
-              <span>
-                Etapa 1 de 4
-              </span>
+                  Voltar
+                </button>
+              ) : (
+                <>
+                  <FileText
+                    size={14}
+                    strokeWidth={1.5}
+                  />
+
+                  Etapa {step} de 4
+                </>
+              )}
             </div>
 
-            <button
-              type="button"
-              className="builder-continue"
-            >
-              Continuar
+            {step < 4 ? (
+              <button
+                type="button"
+                className="builder-continue"
+                onClick={nextStep}
+                disabled={
+                  !canContinue()
+                }
+              >
+                Continuar
 
-              <ArrowRight
-                size={16}
-                strokeWidth={1.7}
-              />
-            </button>
+                <ArrowRight
+                  size={16}
+                  strokeWidth={1.7}
+                />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="builder-continue"
+                onClick={submitProject}
+              >
+                Enviar projeto
+
+                <Rocket
+                  size={16}
+                  strokeWidth={1.7}
+                />
+              </button>
+            )}
           </div>
+
+          {!canContinue() &&
+            step < 4 && (
+              <div className="builder-validation">
+                {step === 2 &&
+                  "Selecione pelo menos uma funcionalidade para continuar."}
+
+                {step === 3 &&
+                  "Conte um pouco mais sobre a sua ideia para continuar."}
+              </div>
+            )}
         </div>
 
         <div className="builder-bottom-note">
           <span>
-            Você poderá revisar tudo antes de enviar.
+            Você poderá revisar tudo antes
+            de enviar.
           </span>
 
           <span>
@@ -442,3 +1285,5 @@ export function ProjectBuilderPreview() {
     </section>
   );
 }
+
+export default ProjectBuilderPreview;

@@ -1,6 +1,15 @@
-import { Float, Line, OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import type { ReactNode } from "react";
+import {
+  Float,
+  Line,
+  OrbitControls,
+  RoundedBox,
+  Sparkles,
+} from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import type { Group } from "three";
+import * as THREE from "three";
+import "./ProjectPreview3D.css";
 
 export type ProjectVisualType =
   | "Website"
@@ -11,424 +20,660 @@ export type ProjectVisualType =
   | "Aplicativo"
   | "Custom";
 
-interface ProjectPreview3DProps {
-  type: ProjectVisualType;
-}
+type Environment = {
+  code: string;
+  title: string;
+  status: string;
+  metrics: string[];
+};
+
+const ENVIRONMENTS: Record<ProjectVisualType, Environment> = {
+  Website: {
+    code: "WEB / 01",
+    title: "Website",
+    status: "ONLINE",
+    metrics: ["UI", "RESPONSIVE", "CMS"],
+  },
+
+  Sistema: {
+    code: "SYS / 02",
+    title: "Sistema",
+    status: "CONNECTED",
+    metrics: ["API", "DATABASE", "AUTH"],
+  },
+
+  "E-commerce": {
+    code: "COM / 03",
+    title: "E-commerce",
+    status: "READY",
+    metrics: ["CHECKOUT", "PAYMENTS", "ORDERS"],
+  },
+
+  Automação: {
+    code: "AUT / 04",
+    title: "Automação",
+    status: "RUNNING",
+    metrics: ["FLOW", "TRIGGERS", "ACTIONS"],
+  },
+
+  IA: {
+    code: "AI / 05",
+    title: "Inteligência Artificial",
+    status: "ACTIVE",
+    metrics: ["MODEL", "CONTEXT", "AGENTS"],
+  },
+
+  Aplicativo: {
+    code: "APP / 06",
+    title: "Aplicativo",
+    status: "MOBILE",
+    metrics: ["IOS", "ANDROID", "UX"],
+  },
+
+  Custom: {
+    code: "ARC / 07",
+    title: "Projeto Custom",
+    status: "BUILDING",
+    metrics: ["CUSTOM", "MODULAR", "SCALABLE"],
+  },
+};
+
+/* ============================================================================
+   WEBSITE
+   ========================================================================== */
 
 function WebsiteObject() {
   return (
     <Float
-      speed={1.3}
-      rotationIntensity={0.18}
-      floatIntensity={0.35}
+      speed={0.8}
+      rotationIntensity={0.08}
+      floatIntensity={0.2}
+      floatingRange={[-0.05, 0.05]}
     >
-      <group rotation={[0.05, -0.16, 0.02]}>
-        <mesh castShadow>
-          <boxGeometry args={[3.4, 2.1, 0.18]} />
-
+      <group rotation={[0.02, -0.14, 0]}>
+        <RoundedBox
+          args={[3.2, 2.05, 0.2]}
+          radius={0.14}
+          smoothness={7}
+        >
           <meshStandardMaterial
-            color="#11161b"
-            metalness={0.72}
-            roughness={0.2}
-            emissive="#c8ff38"
-            emissiveIntensity={0.035}
+            color="#141a1d"
+            metalness={0.82}
+            roughness={0.24}
           />
+        </RoundedBox>
+
+        <RoundedBox
+          args={[2.88, 1.73, 0.035]}
+          radius={0.08}
+          smoothness={5}
+          position={[0, 0, 0.125]}
+        >
+          <meshStandardMaterial
+            color="#090d0f"
+            metalness={0.35}
+            roughness={0.32}
+          />
+        </RoundedBox>
+
+        <mesh position={[0, 0.68, 0.15]}>
+          <boxGeometry args={[2.45, 0.06, 0.025]} />
+          <meshBasicMaterial color="#c8ff38" />
         </mesh>
 
-        <mesh position={[0, 0, 0.11]}>
-          <boxGeometry args={[3.05, 1.72, 0.03]} />
+        <mesh position={[-0.73, 0.2, 0.15]}>
+          <boxGeometry args={[1.08, 0.08, 0.025]} />
+          <meshBasicMaterial color="#f4f5f5" />
+        </mesh>
 
+        <mesh position={[-0.73, 0.03, 0.15]}>
+          <boxGeometry args={[0.82, 0.045, 0.025]} />
+          <meshBasicMaterial color="#616b70" />
+        </mesh>
+
+        <mesh position={[-0.73, -0.11, 0.15]}>
+          <boxGeometry args={[0.7, 0.045, 0.025]} />
+          <meshBasicMaterial color="#3c4549" />
+        </mesh>
+
+        <RoundedBox
+          args={[0.76, 0.66, 0.035]}
+          radius={0.06}
+          smoothness={4}
+          position={[0.84, -0.02, 0.15]}
+        >
           <meshStandardMaterial
-            color="#171d21"
-            metalness={0.25}
+            color="#1c2529"
+            metalness={0.45}
             roughness={0.35}
           />
+        </RoundedBox>
+
+        <mesh position={[0.84, 0.07, 0.18]}>
+          <boxGeometry args={[0.34, 0.34, 0.02]} />
+          <meshBasicMaterial color="#c8ff38" />
         </mesh>
 
-        <mesh position={[0, -1.45, -0.02]}>
-          <boxGeometry args={[0.36, 1.05, 0.18]} />
-
+        <mesh position={[0, -1.2, -0.02]}>
+          <boxGeometry args={[0.16, 0.42, 0.2]} />
           <meshStandardMaterial
-            color="#11161b"
-            metalness={0.7}
-            roughness={0.22}
-          />
-        </mesh>
-
-        <mesh position={[0, -1.95, -0.02]}>
-          <boxGeometry args={[1.45, 0.16, 0.55]} />
-
-          <meshStandardMaterial
-            color="#11161b"
-            metalness={0.72}
-            roughness={0.2}
-          />
-        </mesh>
-
-        <pointLight
-          color="#c8ff38"
-          intensity={1.8}
-          distance={5}
-          position={[0, 0, 1]}
-        />
-      </group>
-    </Float>
-  );
-}
-
-function SystemObject() {
-  return (
-    <Float
-      speed={1}
-      rotationIntensity={0.12}
-      floatIntensity={0.28}
-    >
-      <group>
-        <mesh position={[0, 1.2, 0]}>
-          <boxGeometry args={[2.65, 1.2, 0.28]} />
-
-          <meshStandardMaterial
-            color="#11161b"
-            metalness={0.75}
-            roughness={0.2}
-            emissive="#c8ff38"
-            emissiveIntensity={0.03}
-          />
-        </mesh>
-
-        <mesh position={[0, 1.2, 0.18]}>
-          <boxGeometry args={[2.2, 0.8, 0.03]} />
-
-          <meshStandardMaterial
-            color="#171d21"
-            roughness={0.4}
-          />
-        </mesh>
-
-        <mesh position={[-0.9, -0.55, 0]}>
-          <boxGeometry args={[1.35, 0.72, 1.25]} />
-
-          <meshStandardMaterial
-            color="#12181c"
-            metalness={0.7}
-            roughness={0.24}
-          />
-        </mesh>
-
-        <mesh position={[0.9, -0.55, 0]}>
-          <boxGeometry args={[1.35, 0.72, 1.25]} />
-
-          <meshStandardMaterial
-            color="#12181c"
-            metalness={0.7}
-            roughness={0.24}
-          />
-        </mesh>
-
-        <Line
-          points={[
-            [-0.7, 0.65, 0],
-            [-0.55, 0.1, 0],
-            [-0.9, -0.16, 0],
-          ]}
-          color="#c8ff38"
-          lineWidth={1}
-          transparent
-          opacity={0.65}
-        />
-
-        <Line
-          points={[
-            [0.7, 0.65, 0],
-            [0.55, 0.1, 0],
-            [0.9, -0.16, 0],
-          ]}
-          color="#c8ff38"
-          lineWidth={1}
-          transparent
-          opacity={0.65}
-        />
-
-        <pointLight
-          color="#c8ff38"
-          intensity={2.1}
-          distance={5}
-          position={[0, 0, 1.2]}
-        />
-      </group>
-    </Float>
-  );
-}
-
-function EcommerceObject() {
-  return (
-    <Float
-      speed={1.15}
-      rotationIntensity={0.22}
-      floatIntensity={0.4}
-    >
-      <group rotation={[0.1, -0.25, -0.06]}>
-        <mesh castShadow>
-          <boxGeometry args={[2.5, 2.15, 2.5]} />
-
-          <meshStandardMaterial
-            color="#181b20"
-            metalness={0.35}
-            roughness={0.34}
-            emissive="#c8ff38"
-            emissiveIntensity={0.025}
-          />
-        </mesh>
-
-        <mesh position={[0, 0, 1.27]}>
-          <boxGeometry args={[1.85, 0.75, 0.05]} />
-
-          <meshStandardMaterial
-            color="#c8ff38"
-            emissive="#c8ff38"
-            emissiveIntensity={0.14}
+            color="#121719"
+            metalness={0.8}
             roughness={0.25}
           />
         </mesh>
 
-        <mesh
-          position={[0, 1.15, 0]}
-          rotation={[0, 0, Math.PI / 2]}
+        <mesh position={[0, -1.42, -0.02]}>
+          <boxGeometry args={[1.05, 0.08, 0.42]} />
+          <meshStandardMaterial
+            color="#101416"
+            metalness={0.8}
+            roughness={0.25}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
+
+/* ============================================================================
+   SISTEMA
+   ========================================================================== */
+
+function SystemObject() {
+  const nodes = [
+    [-1.38, 0.72, 0] as const,
+    [1.38, 0.72, 0] as const,
+    [-1.38, -0.72, 0] as const,
+    [1.38, -0.72, 0] as const,
+  ];
+
+  return (
+    <Float
+      speed={0.72}
+      rotationIntensity={0.07}
+      floatIntensity={0.18}
+      floatingRange={[-0.05, 0.05]}
+    >
+      <group>
+        {nodes.map((node, index) => {
+          const centerX = node[0] > 0 ? 0.72 : -0.72;
+          const centerY = node[1] > 0 ? 0.34 : -0.34;
+
+          return (
+            <Line
+              key={`connection-${index}`}
+              points={[
+                [centerX, centerY, 0],
+                node,
+              ]}
+              color="#c8ff38"
+              lineWidth={1}
+              transparent
+              opacity={0.42}
+            />
+          );
+        })}
+
+        <RoundedBox
+          args={[1.6, 1.32, 1]}
+          radius={0.16}
+          smoothness={7}
         >
-          <torusGeometry args={[0.5, 0.07, 16, 40, Math.PI]} />
+          <meshStandardMaterial
+            color="#151c20"
+            metalness={0.86}
+            roughness={0.22}
+          />
+        </RoundedBox>
+
+        <RoundedBox
+          args={[0.95, 0.62, 0.035]}
+          radius={0.06}
+          smoothness={5}
+          position={[0, 0, 0.52]}
+        >
+          <meshStandardMaterial
+            color="#0b1012"
+            metalness={0.35}
+            roughness={0.32}
+          />
+        </RoundedBox>
+
+        <mesh position={[0, 0.12, 0.55]}>
+          <boxGeometry args={[0.5, 0.055, 0.02]} />
+          <meshBasicMaterial color="#c8ff38" />
+        </mesh>
+
+        <mesh position={[0, -0.02, 0.55]}>
+          <boxGeometry args={[0.32, 0.04, 0.02]} />
+          <meshBasicMaterial color="#697378" />
+        </mesh>
+
+        <mesh position={[0, -0.14, 0.55]}>
+          <boxGeometry args={[0.42, 0.04, 0.02]} />
+          <meshBasicMaterial color="#394247" />
+        </mesh>
+
+        {nodes.map((node, index) => (
+          <group key={`module-${index}`} position={node}>
+            <RoundedBox
+              args={[0.52, 0.52, 0.35]}
+              radius={0.09}
+              smoothness={5}
+            >
+              <meshStandardMaterial
+                color="#11171a"
+                metalness={0.78}
+                roughness={0.26}
+              />
+            </RoundedBox>
+
+            <mesh position={[0, 0, 0.2]}>
+              <boxGeometry args={[0.18, 0.18, 0.03]} />
+              <meshBasicMaterial color="#c8ff38" />
+            </mesh>
+          </group>
+        ))}
+      </group>
+    </Float>
+  );
+}
+
+/* ============================================================================
+   E-COMMERCE
+   ========================================================================== */
+
+function EcommerceObject() {
+  return (
+    <Float
+      speed={0.78}
+      rotationIntensity={0.09}
+      floatIntensity={0.2}
+      floatingRange={[-0.05, 0.05]}
+    >
+      <group rotation={[0.05, -0.2, 0]}>
+        <RoundedBox
+          args={[1.65, 1.48, 1.42]}
+          radius={0.16}
+          smoothness={7}
+        >
+          <meshStandardMaterial
+            color="#161b1e"
+            metalness={0.45}
+            roughness={0.36}
+          />
+        </RoundedBox>
+
+        <RoundedBox
+          args={[1.42, 0.1, 1.22]}
+          radius={0.04}
+          smoothness={4}
+          position={[0, 0.77, 0]}
+        >
+          <meshStandardMaterial
+            color="#1d2529"
+            metalness={0.48}
+            roughness={0.32}
+          />
+        </RoundedBox>
+
+        <mesh position={[0, 0, 0.73]}>
+          <planeGeometry args={[0.7, 0.7]} />
+          <meshBasicMaterial color="#c8ff38" />
+        </mesh>
+
+        <mesh position={[0, 0, 0.755]}>
+          <planeGeometry args={[0.38, 0.38]} />
+          <meshBasicMaterial color="#0a0d0f" />
+        </mesh>
+
+        <RoundedBox
+          args={[1.08, 0.55, 0.06]}
+          radius={0.06}
+          smoothness={4}
+          position={[1.08, 0.35, 0.05]}
+        >
+          <meshStandardMaterial
+            color="#11171a"
+            metalness={0.5}
+            roughness={0.3}
+          />
+        </RoundedBox>
+
+        <mesh position={[1.08, 0.46, 0.09]}>
+          <boxGeometry args={[0.65, 0.07, 0.02]} />
+          <meshBasicMaterial color="#f1f3f3" />
+        </mesh>
+
+        <mesh position={[1.08, 0.29, 0.09]}>
+          <boxGeometry args={[0.48, 0.05, 0.02]} />
+          <meshBasicMaterial color="#c8ff38" />
+        </mesh>
+
+        <mesh position={[0, -0.9, 0]}>
+          <boxGeometry args={[2.05, 0.08, 1.5]} />
+          <meshStandardMaterial
+            color="#0d1113"
+            metalness={0.65}
+            roughness={0.3}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
+
+/* ============================================================================
+   AUTOMAÇÃO
+   ========================================================================== */
+
+function AutomationObject() {
+  const nodes = [
+    [-1.55, 0.7, 0] as const,
+    [0, 0, 0] as const,
+    [1.55, -0.7, 0] as const,
+  ];
+
+  return (
+    <Float
+      speed={0.78}
+      rotationIntensity={0.07}
+      floatIntensity={0.2}
+      floatingRange={[-0.05, 0.05]}
+    >
+      <group>
+        <Line
+          points={nodes}
+          color="#c8ff38"
+          lineWidth={1.35}
+          transparent
+          opacity={0.55}
+        />
+
+        {nodes.map((node, index) => (
+          <group key={index} position={node}>
+            <mesh>
+              <sphereGeometry args={[0.27, 28, 28]} />
+
+              <meshStandardMaterial
+                color={
+                  index === 1
+                    ? "#c8ff38"
+                    : "#151c20"
+                }
+                emissive={
+                  index === 1
+                    ? "#7ca91b"
+                    : "#000000"
+                }
+                emissiveIntensity={
+                  index === 1 ? 0.5 : 0
+                }
+                metalness={0.62}
+                roughness={0.22}
+              />
+            </mesh>
+
+            <mesh rotation={[Math.PI / 2, 0, 0]}>
+              <ringGeometry args={[0.4, 0.43, 40]} />
+              <meshBasicMaterial
+                color="#c8ff38"
+                transparent
+                opacity={0.18}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+
+            <mesh position={[0, 0, 0.27]}>
+              <sphereGeometry args={[0.055, 12, 12]} />
+              <meshBasicMaterial color="#ffffff" />
+            </mesh>
+          </group>
+        ))}
+      </group>
+    </Float>
+  );
+}
+
+/* ============================================================================
+   IA
+   ========================================================================== */
+
+function AIObject() {
+  const orbitRef = useRef<Group | null>(null);
+
+  useFrame((_, delta) => {
+    if (!orbitRef.current) {
+      return;
+    }
+
+    orbitRef.current.rotation.y += delta * 0.3;
+    orbitRef.current.rotation.x += delta * 0.06;
+  });
+
+  return (
+    <Float
+      speed={0.62}
+      rotationIntensity={0.05}
+      floatIntensity={0.17}
+      floatingRange={[-0.04, 0.04]}
+    >
+      <group>
+        <mesh>
+          <icosahedronGeometry args={[0.88, 2]} />
 
           <meshStandardMaterial
-            color="#20262b"
-            metalness={0.8}
+            color="#c8ff38"
+            emissive="#6f9618"
+            emissiveIntensity={0.65}
+            metalness={0.28}
             roughness={0.18}
           />
         </mesh>
 
-        <pointLight
-          color="#c8ff38"
-          intensity={2}
-          distance={5}
-          position={[0, 0, 2.2]}
-        />
-      </group>
-    </Float>
-  );
-}
+        <mesh scale={1.18}>
+          <icosahedronGeometry args={[0.88, 2]} />
 
-function AutomationObject() {
-  const points = [
-    [-1.7, 1.2, 0],
-    [0, 0.3, 0],
-    [1.7, 1.05, 0],
-    [1.35, -1.15, 0],
-    [-0.8, -1.1, 0],
-  ] as const;
-
-  return (
-    <Float
-      speed={1.05}
-      rotationIntensity={0.08}
-      floatIntensity={0.35}
-    >
-      <group>
-        <Line
-          points={points}
-          color="#c8ff38"
-          lineWidth={1}
-          transparent
-          opacity={0.48}
-        />
-
-        {points.map((position, index) => (
-          <mesh key={`${position.join("-")}-${index}`} position={position}>
-            <sphereGeometry args={[0.32, 24, 24]} />
-
-            <meshStandardMaterial
-              color={index === 1 ? "#c8ff38" : "#11171b"}
-              emissive="#c8ff38"
-              emissiveIntensity={index === 1 ? 0.18 : 0.035}
-              metalness={0.68}
-              roughness={0.2}
-            />
-          </mesh>
-        ))}
-
-        <pointLight
-          color="#c8ff38"
-          intensity={2}
-          distance={5}
-          position={[0, 0.3, 1]}
-        />
-      </group>
-    </Float>
-  );
-}
-
-function AIObject() {
-  return (
-    <Float
-      speed={1.4}
-      rotationIntensity={0.22}
-      floatIntensity={0.5}
-    >
-      <group>
-        <mesh>
-          <icosahedronGeometry args={[1.35, 4]} />
-
-          <meshStandardMaterial
-            color="#11171b"
-            metalness={0.88}
-            roughness={0.13}
-            emissive="#c8ff38"
-            emissiveIntensity={0.08}
-            wireframe
-          />
-        </mesh>
-
-        <mesh>
-          <sphereGeometry args={[0.76, 48, 48]} />
-
-          <meshStandardMaterial
+          <meshBasicMaterial
             color="#c8ff38"
-            emissive="#c8ff38"
-            emissiveIntensity={0.42}
-            metalness={0.25}
-            roughness={0.15}
-          />
-        </mesh>
-
-        <mesh scale={0.5}>
-          <icosahedronGeometry args={[1.2, 2]} />
-
-          <meshStandardMaterial
-            color="#12181b"
-            metalness={0.72}
-            roughness={0.17}
+            wireframe
             transparent
-            opacity={0.68}
+            opacity={0.26}
           />
         </mesh>
 
-        <pointLight
-          color="#c8ff38"
-          intensity={5}
-          distance={6}
-          position={[0, 0, 1.5]}
-        />
+        <group ref={orbitRef}>
+          <Line
+            points={[
+              [-1.55, 0, 0],
+              [0, 1.55, 0],
+              [1.55, 0, 0],
+              [0, -1.55, 0],
+              [-1.55, 0, 0],
+            ]}
+            color="#c8ff38"
+            lineWidth={1}
+            transparent
+            opacity={0.32}
+          />
+
+          {[
+            [1.55, 0, 0],
+            [-1.55, 0, 0],
+            [0, 1.55, 0],
+            [0, -1.55, 0],
+          ].map((position, index) => (
+            <mesh
+              key={index}
+              position={
+                position as [number, number, number]
+              }
+            >
+              <sphereGeometry args={[0.095, 18, 18]} />
+              <meshBasicMaterial color="#c8ff38" />
+            </mesh>
+          ))}
+        </group>
       </group>
     </Float>
   );
 }
+
+/* ============================================================================
+   APLICATIVO
+   ========================================================================== */
 
 function AppObject() {
   return (
     <Float
-      speed={1.2}
-      rotationIntensity={0.16}
-      floatIntensity={0.34}
+      speed={0.72}
+      rotationIntensity={0.07}
+      floatIntensity={0.18}
+      floatingRange={[-0.05, 0.05]}
     >
-      <group rotation={[0.08, -0.13, 0.04]}>
-        <mesh castShadow>
-          <boxGeometry args={[1.9, 3.5, 0.32]} />
-
+      <group rotation={[0, -0.12, 0]}>
+        <RoundedBox
+          args={[1.42, 2.65, 0.2]}
+          radius={0.18}
+          smoothness={8}
+        >
           <meshStandardMaterial
-            color="#11161b"
-            metalness={0.78}
-            roughness={0.18}
+            color="#111619"
+            metalness={0.82}
+            roughness={0.23}
           />
+        </RoundedBox>
+
+        <RoundedBox
+          args={[1.14, 2.34, 0.035]}
+          radius={0.12}
+          smoothness={6}
+          position={[0, 0, 0.12]}
+        >
+          <meshStandardMaterial
+            color="#090d0f"
+            metalness={0.3}
+            roughness={0.3}
+          />
+        </RoundedBox>
+
+        <mesh position={[-0.4, 1.02, 0.15]}>
+          <sphereGeometry args={[0.055, 16, 16]} />
+          <meshBasicMaterial color="#353d40" />
         </mesh>
 
-        <mesh position={[0, 0.18, 0.18]}>
-          <boxGeometry args={[1.56, 2.65, 0.04]} />
-
-          <meshStandardMaterial
-            color="#151b20"
-            roughness={0.38}
-            emissive="#c8ff38"
-            emissiveIntensity={0.035}
-          />
+        <mesh position={[0, 0.57, 0.15]}>
+          <boxGeometry args={[0.75, 0.42, 0.025]} />
+          <meshBasicMaterial color="#c8ff38" />
         </mesh>
 
-        <mesh position={[0, -1.38, 0.2]}>
-          <sphereGeometry args={[0.08, 20, 20]} />
+        <mesh position={[0, -0.05, 0.15]}>
+          <boxGeometry args={[0.78, 0.07, 0.025]} />
+          <meshBasicMaterial color="#e5e8e8" />
+        </mesh>
 
+        <mesh position={[0, -0.23, 0.15]}>
+          <boxGeometry args={[0.62, 0.045, 0.025]} />
+          <meshBasicMaterial color="#5c666a" />
+        </mesh>
+
+        <RoundedBox
+          args={[0.65, 0.25, 0.035]}
+          radius={0.06}
+          smoothness={4}
+          position={[0, -0.7, 0.15]}
+        >
           <meshStandardMaterial
             color="#c8ff38"
-            emissive="#c8ff38"
-            emissiveIntensity={0.6}
+            emissive="#668f12"
+            emissiveIntensity={0.3}
           />
-        </mesh>
-
-        <pointLight
-          color="#c8ff38"
-          intensity={1.8}
-          distance={4.5}
-          position={[0, 0, 1]}
-        />
+        </RoundedBox>
       </group>
     </Float>
   );
 }
+
+/* ============================================================================
+   CUSTOM
+   ========================================================================== */
 
 function CustomObject() {
-  const modules = [
-    [-1.3, 0.8, 0],
-    [0, 1.55, 0],
-    [1.3, 0.8, 0],
-    [-0.8, -0.7, 0],
-    [0.8, -0.7, 0],
-    [0, -1.7, 0],
-  ] as const;
-
   return (
     <Float
-      speed={1}
-      rotationIntensity={0.12}
-      floatIntensity={0.35}
+      speed={0.7}
+      rotationIntensity={0.07}
+      floatIntensity={0.19}
+      floatingRange={[-0.05, 0.05]}
     >
-      <group>
-        <Line
-          points={[
-            [-1.3, 0.8, 0],
-            [0, 1.55, 0],
-            [1.3, 0.8, 0],
-            [0.8, -0.7, 0],
-            [0, -1.7, 0],
-            [-0.8, -0.7, 0],
-            [-1.3, 0.8, 0],
-          ]}
-          color="#c8ff38"
-          lineWidth={0.8}
-          transparent
-          opacity={0.42}
-        />
+      <group rotation={[0.03, -0.15, 0]}>
+        <RoundedBox
+          args={[1.25, 1.25, 1.25]}
+          radius={0.15}
+          smoothness={7}
+        >
+          <meshStandardMaterial
+            color="#151b1e"
+            metalness={0.85}
+            roughness={0.22}
+          />
+        </RoundedBox>
 
-        {modules.map((position, index) => (
-          <mesh key={`${position.join("-")}-${index}`} position={position}>
-            <boxGeometry args={[0.82, 0.82, 0.82]} />
+        <RoundedBox
+          args={[0.74, 0.74, 0.74]}
+          radius={0.11}
+          smoothness={6}
+          position={[0, 0, 0.82]}
+        >
+          <meshStandardMaterial
+            color="#20282c"
+            metalness={0.75}
+            roughness={0.22}
+          />
+        </RoundedBox>
 
+        <mesh position={[0, 0, 1.2]}>
+          <boxGeometry args={[0.28, 0.28, 0.06]} />
+          <meshBasicMaterial color="#c8ff38" />
+        </mesh>
+
+        {[
+          [-1.05, 0.62, 0],
+          [-1.05, -0.62, 0],
+          [1.05, 0.62, 0],
+          [1.05, -0.62, 0],
+        ].map((position, index) => (
+          <RoundedBox
+            key={index}
+            args={[0.45, 0.45, 0.32]}
+            radius={0.08}
+            smoothness={5}
+            position={
+              position as [number, number, number]
+            }
+          >
             <meshStandardMaterial
-              color={index === 5 ? "#c8ff38" : "#11171b"}
-              metalness={0.74}
-              roughness={0.18}
-              emissive="#c8ff38"
-              emissiveIntensity={index === 5 ? 0.12 : 0.035}
+              color="#11171a"
+              metalness={0.72}
+              roughness={0.27}
             />
-          </mesh>
+          </RoundedBox>
         ))}
-
-        <pointLight
-          color="#c8ff38"
-          intensity={2.6}
-          distance={6}
-          position={[0, 0, 1.4]}
-        />
       </group>
     </Float>
   );
 }
 
-function ProjectObject({ type }: ProjectPreview3DProps) {
+/* ============================================================================
+   OBJETO ATUAL
+   ========================================================================== */
+
+function ProjectObject({
+  type,
+}: {
+  type: ProjectVisualType;
+}) {
   switch (type) {
     case "Website":
       return <WebsiteObject />;
@@ -449,91 +694,164 @@ function ProjectObject({ type }: ProjectPreview3DProps) {
       return <AppObject />;
 
     case "Custom":
-    default:
       return <CustomObject />;
+
+    default:
+      return <WebsiteObject />;
   }
 }
 
-export function ProjectPreview3D({
+/* ============================================================================
+   SCENE
+   ========================================================================== */
+
+function Scene({
   type,
-}: ProjectPreview3DProps) {
-  const lights: ReactNode = (
+}: {
+  type: ProjectVisualType;
+}) {
+  return (
     <>
-      <ambientLight intensity={0.38} />
+      <ambientLight intensity={0.65} />
 
       <directionalLight
-        position={[4, 6, 5]}
-        intensity={2.2}
-        color="#ffffff"
+        position={[4, 5, 6]}
+        intensity={1.75}
+      />
+
+      <directionalLight
+        position={[-4, 2, 2]}
+        intensity={0.45}
       />
 
       <pointLight
-        position={[-4, 1, 4]}
-        intensity={3.5}
-        distance={10}
+        position={[-3, 1, 4]}
+        intensity={1.9}
+        distance={8}
         color="#c8ff38"
+      />
+
+      <pointLight
+        position={[3, -2, 3]}
+        intensity={0.65}
+        distance={7}
+      />
+
+      <Sparkles
+        count={24}
+        scale={[6, 4, 4]}
+        size={1}
+        speed={0.12}
+        opacity={0.16}
+        color="#c8ff38"
+      />
+
+      {/* Corte seco:
+          o React desmonta o modelo antigo e monta o novo imediatamente. */}
+      <ProjectObject type={type} />
+
+      <gridHelper
+        args={[
+          8,
+          16,
+          "#1c2327",
+          "#0e1214",
+        ]}
+        position={[0, -1.72, 0]}
+      />
+
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        enableDamping
+        dampingFactor={0.08}
+        autoRotate
+        autoRotateSpeed={0.16}
+        minPolarAngle={Math.PI * 0.38}
+        maxPolarAngle={Math.PI * 0.62}
       />
     </>
   );
+}
+
+/* ============================================================================
+   MAIN
+   ========================================================================== */
+
+export function ProjectPreview3D({
+  type,
+}: {
+  type: ProjectVisualType;
+}) {
+  const environment = ENVIRONMENTS[type];
 
   return (
-    <div
-      className="project-preview-3d"
-      aria-label={`Visualização 3D de ${type}`}
-    >
-      <Canvas
-        camera={{
-          position: [0, 0.4, 7],
-          fov: 38,
-        }}
-        dpr={[1, 1.5]}
-        gl={{
-          antialias: true,
-          powerPreference: "high-performance",
-        }}
-      >
-        <color
-          attach="background"
-          args={["#090c10"]}
-        />
+    <div className="project-preview-shell">
+      <div className="project-preview-grid" />
+      <div className="project-preview-vignette" />
 
-        <fog
-          attach="fog"
-          args={["#090c10", 7, 15]}
-        />
+      <div className="project-preview-header">
+        <div className="project-preview-code">
+          {environment.code}
+        </div>
 
-        {lights}
-
-        <ProjectObject type={type} />
-
-        <gridHelper
-          args={[9, 18, "#29361d", "#172019"]}
-          position={[0, -2.15, 0]}
-        />
-
-        <OrbitControls
-          enablePan={false}
-          enableZoom={false}
-          minDistance={5}
-          maxDistance={8}
-          minPolarAngle={Math.PI / 2.8}
-          maxPolarAngle={Math.PI / 1.65}
-          autoRotate
-          autoRotateSpeed={0.55}
-        />
-      </Canvas>
-
-      <div className="project-preview-overlay">
-        <span>3D PREVIEW</span>
-
-        <span>
-          {type}
-        </span>
+        <div className="project-preview-status">
+          <span className="project-preview-status-dot" />
+          {environment.status}
+        </div>
       </div>
 
-      <div className="project-preview-corner">
-        ARC / BUILD
+      <div className="project-preview-title">
+        <span>ARC / PROJECT VISUALIZER</span>
+        <strong>{environment.title}</strong>
+      </div>
+
+      <div className="project-preview-corners">
+        <span className="corner top-left" />
+        <span className="corner top-right" />
+        <span className="corner bottom-left" />
+        <span className="corner bottom-right" />
+      </div>
+
+      <div className="project-preview-side-label left">
+        SYSTEM / 03
+      </div>
+
+      <div className="project-preview-side-label right">
+        LIVE PREVIEW
+      </div>
+
+      <div className="project-preview-canvas">
+        <Canvas
+          dpr={[1, 1.35]}
+          camera={{
+            position: [0, 0.1, 7],
+            fov: 38,
+          }}
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance",
+          }}
+        >
+          <Scene type={type} />
+        </Canvas>
+      </div>
+
+      <div className="project-preview-bottom">
+        <div className="project-preview-metrics">
+          {environment.metrics.map((metric) => (
+            <span key={metric}>{metric}</span>
+          ))}
+        </div>
+
+        <div className="project-preview-engine">
+          <span className="engine-line" />
+          REAL-TIME 3D
+        </div>
       </div>
     </div>
   );
 }
+
+export default ProjectPreview3D;
