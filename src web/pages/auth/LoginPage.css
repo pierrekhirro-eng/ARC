@@ -1,0 +1,1350 @@
+.arc-login {
+  --login-bg: #07090b;
+  --login-surface: #0c1014;
+  --login-surface-2: #10151a;
+
+  --login-text: #f4f5f1;
+  --login-soft: #a5adb4;
+  --login-muted: #596168;
+
+  --login-line: rgba(255, 255, 255, 0.075);
+  --login-line-strong: rgba(255, 255, 255, 0.13);
+
+  --login-green: #c8ff38;
+
+  position: relative;
+
+  min-height: 100svh;
+  width: 100%;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--login-bg);
+  color: var(--login-text);
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.arc-login-grid {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.38;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 16%,
+      black 84%,
+      transparent
+    );
+
+  animation:
+    arcLoginGrid 24s linear infinite;
+
+  pointer-events: none;
+}
+
+.arc-login-glow {
+  position: absolute;
+
+  width: 620px;
+  height: 620px;
+
+  left: 14%;
+  top: 16%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(200, 255, 56, 0.055),
+      transparent 68%
+    );
+
+  filter: blur(32px);
+
+  pointer-events: none;
+
+  animation:
+    arcLoginGlow 8s ease-in-out infinite;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.arc-login-header {
+  position: relative;
+
+  z-index: 10;
+
+  height: 72px;
+
+  padding: 0 32px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid
+    var(--login-line);
+
+  background:
+    rgba(7, 9, 11, 0.84);
+
+  backdrop-filter: blur(18px);
+}
+
+.arc-login-brand {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: var(--login-text);
+
+  font-family: var(--font-display);
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.04em;
+}
+
+.arc-login-brand-mark {
+  width: 29px;
+  height: 29px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.65);
+
+  border-radius: 50%;
+
+  font-size: 10px;
+}
+
+.arc-login-back {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--login-muted);
+
+  font-size: 9px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.09em;
+
+  transition:
+    color 180ms ease;
+}
+
+.arc-login-back:hover {
+  color: var(--login-green);
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.arc-login-layout {
+  position: relative;
+
+  z-index: 5;
+
+  flex: 1;
+
+  width:
+    min(
+      1320px,
+      calc(100% - 64px)
+    );
+
+  margin-inline: auto;
+
+  padding: 54px 0 42px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(390px, 455px);
+
+  gap: 90px;
+
+  align-items: stretch;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.arc-login-intro {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.arc-login-intro-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.arc-login-code,
+.arc-login-live {
+  color: var(--login-muted);
+
+  font-size: 8px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.arc-login-live {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.arc-login-live i {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--login-green);
+
+  box-shadow:
+    0 0 12px
+    rgba(200, 255, 56, 0.5);
+
+  animation:
+    arcLoginPulse 2.5s ease-in-out infinite;
+}
+
+.arc-login-intro-main {
+  max-width: 760px;
+
+  margin-top: auto;
+  margin-bottom: 42px;
+}
+
+.arc-login-kicker {
+  display: block;
+
+  margin-bottom: 18px;
+
+  color:
+    rgba(200, 255, 56, 0.68);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.arc-login-intro-main h1 {
+  margin: 0;
+
+  color: var(--login-text);
+
+  font-family: var(--font-display);
+
+  font-size:
+    clamp(
+      4rem,
+      7.1vw,
+      7.9rem
+    );
+
+  font-weight: 500;
+
+  line-height: 0.85;
+
+  letter-spacing: -0.085em;
+}
+
+.arc-login-intro-main h1 em {
+  color: #939ba2;
+
+  font-family: var(--font-editorial);
+
+  font-style: italic;
+
+  font-weight: 400;
+
+  letter-spacing: -0.06em;
+}
+
+.arc-login-intro-main p {
+  max-width: 515px;
+
+  margin-top: 36px;
+
+  color: var(--login-soft);
+
+  font-size: 12px;
+
+  line-height: 1.65;
+}
+
+/* =========================================================
+   SYSTEM VISUAL
+========================================================= */
+
+.arc-login-system {
+  width: min(100%, 660px);
+
+  border:
+    1px solid
+    var(--login-line);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.005)
+    );
+}
+
+.arc-login-system-top,
+.arc-login-system-bottom {
+  height: 35px;
+
+  padding: 0 12px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  color: #4d565d;
+
+  font-size: 6px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.arc-login-system-top {
+  border-bottom:
+    1px solid
+    var(--login-line);
+}
+
+.arc-login-system-bottom {
+  border-top:
+    1px solid
+    var(--login-line);
+}
+
+.arc-login-system-bottom span:last-child {
+  color:
+    rgba(200, 255, 56, 0.42);
+}
+
+.arc-login-system-body {
+  position: relative;
+
+  height: 245px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(200, 255, 56, 0.04),
+      transparent 32%
+    );
+}
+
+.arc-login-system-body::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+.arc-login-system-orbit {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.15);
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+.arc-login-system-orbit.orbit-one {
+  width: 175px;
+  height: 175px;
+
+  animation:
+    arcLoginOrbit 26s linear infinite;
+}
+
+.arc-login-system-orbit.orbit-two {
+  width: 115px;
+  height: 115px;
+
+  border-style: dashed;
+
+  opacity: 0.7;
+
+  animation:
+    arcLoginOrbitReverse 18s linear infinite;
+}
+
+.arc-login-system-core {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.38);
+
+  background:
+    rgba(200, 255, 56, 0.035);
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
+
+  animation:
+    arcLoginCore 9s linear infinite;
+}
+
+.arc-login-system-core span {
+  width: 17px;
+  height: 17px;
+
+  background: var(--login-green);
+
+  box-shadow:
+    0 0 22px
+    rgba(200, 255, 56, 0.38);
+}
+
+.arc-login-system-line {
+  position: absolute;
+
+  background:
+    rgba(200, 255, 56, 0.11);
+}
+
+.arc-login-system-line.line-x {
+  left: 17%;
+  right: 17%;
+  top: 50%;
+
+  height: 1px;
+}
+
+.arc-login-system-line.line-y {
+  top: 17%;
+  bottom: 17%;
+  left: 50%;
+
+  width: 1px;
+}
+
+.system-node {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border:
+    1px solid
+    rgba(200, 255, 56, 0.5);
+
+  border-radius: 50%;
+
+  background:
+    var(--login-bg);
+}
+
+.node-top {
+  top: calc(50% - 92px);
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+}
+
+.node-right {
+  right: calc(50% - 92px);
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+}
+
+.node-bottom {
+  bottom: calc(50% - 92px);
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+}
+
+.node-left {
+  left: calc(50% - 92px);
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+}
+
+/* =========================================================
+   PANEL
+========================================================= */
+
+.arc-login-panel {
+  min-width: 0;
+
+  align-self: center;
+
+  padding: 28px;
+
+  border:
+    1px solid
+    var(--login-line);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 20, 24, 0.98),
+      rgba(9, 12, 15, 0.98)
+    );
+
+  box-shadow:
+    0 30px 80px
+    rgba(0, 0, 0, 0.26);
+}
+
+.arc-login-panel-head {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 22px;
+
+  border-bottom:
+    1px solid
+    var(--login-line);
+}
+
+.arc-login-panel-head > div:first-child > span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color:
+    rgba(200, 255, 56, 0.58);
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+}
+
+.arc-login-panel-head h2 {
+  margin: 0;
+
+  color: var(--login-text);
+
+  font-family: var(--font-display);
+
+  font-size: 34px;
+
+  font-weight: 500;
+
+  line-height: 0.95;
+
+  letter-spacing: -0.055em;
+}
+
+.arc-login-panel-index {
+  color: #4c555b;
+
+  font-family: var(--font-display);
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.arc-login-form {
+  padding-top: 25px;
+}
+
+.arc-login-field {
+  margin-bottom: 20px;
+}
+
+.arc-login-field label,
+.arc-login-field-label label {
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  font-size: 9px;
+
+  font-weight: 500;
+}
+
+.arc-login-field input {
+  width: 100%;
+
+  height: 48px;
+
+  margin-top: 8px;
+
+  padding: 0 13px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  outline: none;
+
+  background:
+    #0a0e11;
+
+  color: var(--login-text);
+
+  font-size: 11px;
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.arc-login-field input::placeholder {
+  color: #4e575d;
+}
+
+.arc-login-field input:focus {
+  border-color:
+    rgba(200, 255, 56, 0.35);
+
+  background:
+    #0c1114;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(200, 255, 56, 0.035);
+}
+
+.arc-login-field-label {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arc-login-field-label a {
+  color:
+    rgba(200, 255, 56, 0.58);
+
+  font-size: 7px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.07em;
+
+  text-transform: uppercase;
+}
+
+.arc-login-field-label a:hover {
+  color: var(--login-green);
+}
+
+/* =========================================================
+   REMEMBER
+========================================================= */
+
+.arc-login-remember {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: var(--login-muted);
+
+  font-size: 9px;
+
+  cursor: pointer;
+}
+
+.arc-login-remember input {
+  position: absolute;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.arc-login-checkbox {
+  width: 15px;
+  height: 15px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.13);
+}
+
+.arc-login-checkbox span {
+  width: 7px;
+  height: 7px;
+
+  opacity: 0;
+
+  background:
+    var(--login-green);
+
+  transition:
+    opacity 150ms ease;
+}
+
+.arc-login-remember input:checked
+  + .arc-login-checkbox
+  span {
+  opacity: 1;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.arc-login-error {
+  margin-top: 14px;
+
+  padding: 9px 10px;
+
+  border:
+    1px solid
+    rgba(255, 100, 100, 0.17);
+
+  background:
+    rgba(255, 100, 100, 0.035);
+
+  color:
+    #ff9a9a;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.arc-login-submit {
+  width: 100%;
+
+  min-height: 50px;
+
+  margin-top: 20px;
+
+  padding: 0 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border:
+    1px solid
+    var(--login-green);
+
+  background:
+    var(--login-green);
+
+  color:
+    #10130d;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.arc-login-submit:hover:not(:disabled) {
+  background:
+    #d5ff65;
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 12px 25px
+    rgba(200, 255, 56, 0.08);
+}
+
+.arc-login-submit:hover:not(:disabled) svg {
+  transform:
+    translateX(3px);
+}
+
+.arc-login-submit svg {
+  transition:
+    transform 180ms ease;
+}
+
+.arc-login-submit:disabled {
+  opacity: 0.7;
+
+  cursor: wait;
+}
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.arc-login-divider {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 23px 0;
+}
+
+.arc-login-divider span {
+  height: 1px;
+
+  background:
+    var(--login-line);
+}
+
+.arc-login-divider small {
+  color: #4f585e;
+
+  font-size: 6px;
+
+  letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   CREATE
+========================================================= */
+
+.arc-login-create {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 14px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.055);
+
+  background:
+    rgba(255, 255, 255, 0.012);
+}
+
+.arc-login-create > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.arc-login-create > div span {
+  color: #566067;
+
+  font-size: 6px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.arc-login-create > div strong {
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-family: var(--font-display);
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+.arc-login-create > a {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: var(--login-green);
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.arc-login-security {
+  margin-top: 19px;
+
+  padding-top: 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 9px;
+
+  border-top:
+    1px solid
+    var(--login-line);
+
+  color: #596168;
+}
+
+.arc-login-security > svg:first-child {
+  color:
+    rgba(200, 255, 56, 0.55);
+}
+
+.arc-login-security > svg:last-child {
+  color: #464f55;
+}
+
+.arc-login-security div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.arc-login-security strong {
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  font-size: 8px;
+
+  font-weight: 600;
+}
+
+.arc-login-security span {
+  color:
+    #4c555c;
+
+  font-size: 7px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.arc-login-footer {
+  position: relative;
+
+  z-index: 5;
+
+  width:
+    min(
+      1320px,
+      calc(100% - 64px)
+    );
+
+  margin-inline: auto;
+
+  padding: 14px 0 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  border-top:
+    1px solid
+    var(--login-line);
+
+  color: #434c52;
+
+  font-size: 6px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.11em;
+
+  text-transform: uppercase;
+}
+
+.arc-login-footer div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  justify-self: center;
+}
+
+.arc-login-footer div span {
+  width: 20px;
+  height: 1px;
+
+  background:
+    rgba(200, 255, 56, 0.28);
+}
+
+.arc-login-footer > span:last-child {
+  justify-self: end;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes arcLoginGrid {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+
+  to {
+    background-position:
+      48px 48px,
+      48px 48px;
+  }
+}
+
+@keyframes arcLoginGlow {
+  0%,
+  100% {
+    opacity: 0.45;
+
+    transform:
+      scale(1);
+  }
+
+  50% {
+    opacity: 0.75;
+
+    transform:
+      scale(1.06);
+  }
+}
+
+@keyframes arcLoginPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes arcLoginOrbit {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg);
+  }
+}
+
+@keyframes arcLoginOrbitReverse {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg);
+  }
+}
+
+@keyframes arcLoginCore {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(45deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(405deg);
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .arc-login-layout {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+
+    padding-top: 42px;
+  }
+
+  .arc-login-intro-main {
+    margin-top: 55px;
+    margin-bottom: 35px;
+  }
+
+  .arc-login-system {
+    width: 100%;
+  }
+
+  .arc-login-panel {
+    width: min(100%, 520px);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .arc-login-header {
+    height: 64px;
+
+    padding: 0 16px;
+  }
+
+  .arc-login-back {
+    font-size: 7px;
+  }
+
+  .arc-login-layout {
+    width:
+      calc(100% - 30px);
+
+    padding:
+      32px 0 28px;
+
+    gap: 30px;
+  }
+
+  .arc-login-intro-top {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 9px;
+  }
+
+  .arc-login-intro-main {
+    margin-top: 48px;
+  }
+
+  .arc-login-intro-main h1 {
+    font-size:
+      clamp(
+        3.3rem,
+        15vw,
+        5.2rem
+      );
+  }
+
+  .arc-login-intro-main p {
+    margin-top: 26px;
+
+    font-size: 10px;
+  }
+
+  .arc-login-system-body {
+    height: 205px;
+  }
+
+  .arc-login-panel {
+    padding: 20px;
+  }
+
+  .arc-login-panel-head h2 {
+    font-size: 29px;
+  }
+
+  .arc-login-create {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .arc-login-footer {
+    width:
+      calc(100% - 30px);
+
+    grid-template-columns:
+      1fr
+      auto;
+
+    row-gap: 10px;
+  }
+
+  .arc-login-footer div {
+    display: none;
+  }
+
+  .arc-login-footer > span:last-child {
+    justify-self: end;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-login-grid,
+  .arc-login-glow,
+  .arc-login-live i,
+  .arc-login-system-orbit,
+  .arc-login-system-core {
+    animation: none !important;
+  }
+}
